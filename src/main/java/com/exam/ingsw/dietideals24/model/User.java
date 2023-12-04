@@ -22,6 +22,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(columnDefinition = "TEXT") // Must be updatable (nullable = true)
+    private String bio;
+
     // 1 to N Relationship with Item
     @OneToMany(mappedBy =  "user", fetch = FetchType.LAZY)  // a User can be registered even without items
     private Set<Item> items;
@@ -74,6 +77,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 
     public Set<Item> getItems() {
