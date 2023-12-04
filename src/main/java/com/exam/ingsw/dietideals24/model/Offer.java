@@ -1,7 +1,8 @@
 package com.exam.ingsw.dietideals24.model;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "offers")
@@ -22,11 +23,17 @@ public class Offer {
     private float offer;
 
     @Column(nullable = false)
-    private LocalDateTime offerDateAndTime;
+    private LocalDate offerDate;
+
+    @Column(nullable = false)
+    private LocalTime offerTime;
 
     /* CONSTRUCTOR */
 
-    public Offer() {}
+    public Offer() {
+        this.offerDate = LocalDate.now();
+        this.offerTime = LocalTime.now();
+    }
 
     /* GETTERS AND SETTERS */
 
@@ -62,13 +69,19 @@ public class Offer {
         this.offer = offer;
     }
 
-    public LocalDateTime getOfferDateAndTime() {
-        return offerDateAndTime;
+    public LocalDate getOfferDate() {
+        return offerDate;
     }
 
-    public void setOfferDateAndTime(LocalDateTime offerDateAndTime) {
-        this.offerDateAndTime = offerDateAndTime;
+    public void setOfferDate(LocalDate offerDate) {
+        this.offerDate = offerDate;
     }
 
-    /* METHODS */
+    public LocalTime getOfferTime() {
+        return offerTime;
+    }
+
+    public void setOfferTime(LocalTime offerTime) {
+        this.offerTime = offerTime;
+    }
 }

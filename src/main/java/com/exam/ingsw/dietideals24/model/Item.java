@@ -24,13 +24,13 @@ public class Item {
     @Lob
     private byte[] image; // The item's image corresponds to a BLOB datatype
 
+    // 1 to N Relationship with User
     @ManyToOne
     @JoinColumn(name = "userId", nullable = false) // Fk that points to the User's userId
     private User user;
 
-    // TODO: Here I set nullable = false because I think the Item will be uploaded to the app only in auctions
-    @ManyToOne
-    @JoinColumn(name = "auctionId", nullable = false) // Fk that points to the Auction's auctionId
+    // 1 to 1 Relationship with Auction
+    @OneToOne(mappedBy = "item")
     private Auction auction;
 
     /* CONSTRUCTOR */
@@ -102,6 +102,4 @@ public class Item {
     public void setAuction(Auction auction) {
         this.auction = auction;
     }
-
-    /* METHODS */
 }

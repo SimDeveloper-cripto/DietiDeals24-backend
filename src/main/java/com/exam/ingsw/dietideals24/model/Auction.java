@@ -21,8 +21,10 @@ public class Auction {
     @Column(nullable = false)
     private Duration duration; // Example: auction.setDurationInSeconds(604800); --> 604800 means 7 days of duration
 
-    @OneToMany(mappedBy =  "auction", fetch = FetchType.EAGER)
-    private Set<Item> items;
+    // 1 to 1 Relation with Item
+    @OneToOne
+    @JoinColumn(name =  "item_id", referencedColumnName = "itemId", nullable = false)
+    private Item item;
 
     @OneToMany(mappedBy = "auction")
     private Set<Offer> offers;
@@ -65,12 +67,12 @@ public class Auction {
         this.duration = duration;
     }
 
-    public Set<Item> getItems() {
-        return items;
+    public Item getItem() {
+        return item;
     }
 
-    public void setItems(Set<Item> items) {
-        this.items = items;
+    public void setItem(Item item) {
+        this.item = item;
     }
 
     public Set<Offer> getOffers() {
@@ -80,6 +82,4 @@ public class Auction {
     public void setOffers(Set<Offer> offers) {
         this.offers = offers;
     }
-
-    /* METHODS */
 }

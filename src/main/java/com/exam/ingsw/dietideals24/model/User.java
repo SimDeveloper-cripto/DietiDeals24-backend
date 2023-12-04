@@ -22,6 +22,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    // 1 to N Relationship with Item
     @OneToMany(mappedBy =  "user", fetch = FetchType.LAZY)  // a User can be registered even without items
     private Set<Item> items;
 
@@ -90,6 +91,4 @@ public class User {
     public void setOffers(Set<Offer> offers) {
         this.offers = offers;
     }
-
-    /* METHODS */
 }
