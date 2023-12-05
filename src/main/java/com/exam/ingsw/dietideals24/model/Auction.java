@@ -13,6 +13,9 @@ public class Auction {
     private Integer auctionId;
 
     @Column(nullable = false)
+    private int ownerId;
+
+    @Column(nullable = false)
     private Type auctionType;
 
     @Column(nullable = false)
@@ -20,6 +23,9 @@ public class Auction {
 
     @Column(nullable = false)
     private Duration duration; // Example: auction.setDurationInSeconds(604800); --> 604800 means 7 days of duration
+
+    @Column
+    private boolean terminated;
 
     // 1 to 1 Relation with Item
     @OneToOne
@@ -43,6 +49,10 @@ public class Auction {
         this.auctionId = auctionId;
     }
 
+    public int getOwnerId() { return ownerId; }
+
+    public void setOwnerId(int ownerId) { this.ownerId = ownerId; }
+
     public Type getAuctionType() {
         return auctionType;
     }
@@ -65,6 +75,14 @@ public class Auction {
 
     public void setDuration(Duration duration) {
         this.duration = duration;
+    }
+
+    public boolean isTerminated() {
+        return terminated;
+    }
+
+    public void setTerminated(boolean terminated) {
+        this.terminated = terminated;
     }
 
     public Item getItem() {

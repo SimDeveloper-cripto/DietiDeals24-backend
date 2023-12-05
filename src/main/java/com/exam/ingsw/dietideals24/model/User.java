@@ -25,6 +25,9 @@ public class User {
     @Column(columnDefinition = "TEXT") // Must be updatable (nullable = true)
     private String bio;
 
+    @Column
+    private String webSiteUrl;
+
     // 1 to N Relationship with Item
     @OneToMany(mappedBy =  "user", fetch = FetchType.LAZY)  // a User can be registered even without items
     private Set<Item> items;
@@ -85,6 +88,14 @@ public class User {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public String getWebSiteUrl() {
+        return webSiteUrl;
+    }
+
+    public void setWebSiteUrl(String webSiteUrl) {
+        this.webSiteUrl = webSiteUrl;
     }
 
     public Set<Item> getItems() {
