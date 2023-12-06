@@ -1,7 +1,8 @@
 package com.exam.ingsw.dietideals24.model;
 
 import java.util.Set;
-import java.time.Duration;
+import java.sql.Date;
+import java.sql.Time;
 import jakarta.persistence.*;
 import com.exam.ingsw.dietideals24.enums.Type;
 
@@ -21,8 +22,11 @@ public class Auction {
     @Column(nullable = false)
     private float currentOfferValue;
 
-    @Column(nullable = false)
-    private Duration duration; // Example: auction.setDurationInSeconds(604800); --> 604800 means 7 days of duration
+    @Column
+    private Date expirationDate;
+
+    @Column
+    private Time expirationTime;
 
     @Column
     private boolean terminated;
@@ -69,12 +73,20 @@ public class Auction {
         this.currentOfferValue = currentOfferValue;
     }
 
-    public Duration getDuration() {
-        return duration;
+    public Date getExpirationDate() {
+        return expirationDate;
     }
 
-    public void setDuration(Duration duration) {
-        this.duration = duration;
+    public void setExpirationDate(Date expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public Time getExpirationTime() {
+        return expirationTime;
+    }
+
+    public void setExpirationTime(Time expirationTime) {
+        this.expirationTime = expirationTime;
     }
 
     public boolean isTerminated() {
