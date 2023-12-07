@@ -1,9 +1,8 @@
 package com.exam.ingsw.dietideals24.controller;
 
-import com.exam.ingsw.dietideals24.model.Item;
-import com.exam.ingsw.dietideals24.service.IItemService;
-
 import org.springframework.http.ResponseEntity;
+import com.exam.ingsw.dietideals24.model.Auction;
+import com.exam.ingsw.dietideals24.service.IAuctionService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +10,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class RegisterItemController {
+public class RegisterAuctionController {
     @Autowired
-    @Qualifier("ItemService")
-    private IItemService itemService;
+    @Qualifier("AuctionService")
+    private IAuctionService auctionService;
 
-    @PostMapping("/addItem")
-    public ResponseEntity<Item> registerItem(@RequestBody Item item) {
-        return itemService.registerItem(item);
+    @PostMapping("/addAuction")
+    public ResponseEntity<Auction> registerAuction(@RequestBody Auction auction) {
+        return auctionService.registerAuction(auction);
     }
 }
