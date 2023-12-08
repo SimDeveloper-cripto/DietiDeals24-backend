@@ -17,7 +17,7 @@ public class RegisterItemController {
     private IItemService itemService;
 
     @PostMapping("/addItem")
-    public ResponseEntity<Item> registerItem(@RequestBody Item item) {
+    public ResponseEntity<Void> registerItem(@RequestBody Item item) {
         return itemService.registerItem(item);
     }
 }

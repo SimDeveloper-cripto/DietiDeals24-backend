@@ -15,10 +15,10 @@ public class ItemService implements IItemService {
     public ItemService() {}
 
     @Override
-    public ResponseEntity<Item> registerItem(Item item) {
+    public ResponseEntity<Void> registerItem(Item item) {
         try {
             Item savedItem = itemRepository.save(item);
-            return new ResponseEntity<>(savedItem, HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
