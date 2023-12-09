@@ -22,6 +22,7 @@ public class Item {
     private float basePrize;
 
     @Lob
+    @Column(columnDefinition = "LONGBLOB", nullable = false)
     private byte[] image; // The item's image corresponds to a BLOB datatype
 
     // 1 to N Relationship with User
