@@ -5,6 +5,4 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.repository.CrudRepository;
 
 @Repository
-public interface IAuctionRepository extends CrudRepository<Auction, Integer> {
-
-}
+public interface IAuctionRepository extends CrudRepository<Auction, Integer> {}

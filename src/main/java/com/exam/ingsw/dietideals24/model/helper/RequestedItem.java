@@ -1,4 +1,4 @@
-package com.exam.ingsw.dietideals24.model.request;
+package com.exam.ingsw.dietideals24.model.helper;
 
 import com.exam.ingsw.dietideals24.model.User;
 

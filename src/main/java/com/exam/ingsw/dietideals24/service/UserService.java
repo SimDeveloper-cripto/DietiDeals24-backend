@@ -1,13 +1,11 @@
 package com.exam.ingsw.dietideals24.service;
 
+import java.util.Optional;
 import com.exam.ingsw.dietideals24.model.User;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.exam.ingsw.dietideals24.repository.IUserRepository;
-
 import com.exam.ingsw.dietideals24.exception.UserNotFoundException;
-
-import java.util.Optional;
 
 @Service("UserService")
 public class UserService implements IUserService {
