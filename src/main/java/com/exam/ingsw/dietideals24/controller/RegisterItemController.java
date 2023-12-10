@@ -25,7 +25,7 @@ public class RegisterItemController {
     }
 
     @PostMapping("/item/addItem")
-    public ResponseEntity<Void> createItem(@RequestBody RequestedItem requestedItem) throws ImageContentIsNullException {
+    public ResponseEntity<Integer> createItem(@RequestBody RequestedItem requestedItem) throws ImageContentIsNullException {
         Item item = new Item();
         item.setName(requestedItem.getName());
         item.setDescription(requestedItem.getDescription());
@@ -38,7 +38,7 @@ public class RegisterItemController {
         else
             throw new ImageContentIsNullException("The image of the Item received is null!");
 
-        itemService.createItem(item);
-        return ResponseEntity.ok().build();
+        Integer itemId = itemService.createItem(item);
+        return ResponseEntity.ok(itemId);
     }
 }

@@ -13,7 +13,8 @@ public class ItemService implements IItemService {
     public ItemService() {}
 
     @Override
-    public void createItem(Item item) {
-        itemRepository.save(item);
+    public Integer createItem(Item item) {
+        Item savedItem = itemRepository.save(item);
+        return savedItem.getItemId();
     }
 }
