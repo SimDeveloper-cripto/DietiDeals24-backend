@@ -29,7 +29,7 @@ public class Auction {
     private Time expirationTime;
 
     @Column
-    private boolean terminated;
+    private boolean active;
 
     // 1 to 1 Relation with Item
     @OneToOne
@@ -89,12 +89,12 @@ public class Auction {
         this.expirationTime = expirationTime;
     }
 
-    public boolean isTerminated() {
-        return terminated;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setTerminated(boolean terminated) {
-        this.terminated = terminated;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public Item getItem() {

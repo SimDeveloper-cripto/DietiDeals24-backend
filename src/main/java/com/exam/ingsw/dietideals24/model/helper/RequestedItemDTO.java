@@ -2,12 +2,26 @@ package com.exam.ingsw.dietideals24.model.helper;
 
 import com.exam.ingsw.dietideals24.model.User;
 
-public class RequestedItem {
-    private String name, description, category;
-    private float basePrize;
-    private User user;
+/* [CLASS DESCRIPTION]
+    - This object is sent by the client when a request to create an Item (for an Auction) occurs.
+    - The real Item (the one stored inside the db) is created using this "fake" object.
+**/
 
-    public RequestedItem() {}
+public class RequestedItemDTO {
+    private User user;
+    private Integer itemId;
+    private float basePrize;
+    private String name, description, category;
+
+    public RequestedItemDTO() {}
+
+    public Integer getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(Integer itemId) {
+        this.itemId = itemId;
+    }
 
     public String getName() {
         return name;
