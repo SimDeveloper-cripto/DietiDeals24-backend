@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RestController;
+import com.exam.ingsw.dietideals24.exception.EmptyParametersException;
 
 @RestController
 public class LoginController {
@@ -15,10 +16,15 @@ public class LoginController {
     private IUserService userService;
 
     @GetMapping("/userLogin")
-    public User findUser(@RequestParam String email, @RequestParam String password) {
+    public User findUser(@RequestParam String email, @RequestParam String password) throws EmptyParametersException {
         User user = new User();
-        user.setEmail(email);
-        user.setPassword(password);
-        return userService.loginUser(user);
+
+        if ((email.isEmpty() || email.isBlank()) || (password.isEmpty() || password.isBlank()))
+            throw new EmptyParametersException("Login Error: At least one of email and password is an empty string!");
+        else {
+            user.setEmail(email);
+            user.setPassword(password);
+            return userService.loginUser(user);
+        }
     }
 }
