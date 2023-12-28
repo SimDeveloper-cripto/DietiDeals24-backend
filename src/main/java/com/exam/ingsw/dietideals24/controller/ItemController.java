@@ -1,5 +1,6 @@
 package com.exam.ingsw.dietideals24.controller;
 
+import com.exam.ingsw.dietideals24.exception.EmptyParametersException;
 import com.exam.ingsw.dietideals24.model.Item;
 import com.exam.ingsw.dietideals24.service.IItemService;
 import com.exam.ingsw.dietideals24.model.helper.RequestedItemDTO;
@@ -9,10 +10,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import java.util.List;
+
 import com.exam.ingsw.dietideals24.exception.ImageContentIsNullException;
 
 @RestController
-public class RegisterItemController {
+public class ItemController {
     private byte[] itemImageContent;
 
     @Autowired
@@ -40,5 +43,16 @@ public class RegisterItemController {
 
         Integer itemId = itemService.createItem(item);
         return ResponseEntity.ok(itemId);
+    }
+
+    @GetMapping("/item/findItemsUpForAuction")
+    public ResponseEntity<List<Item>> findItemsUpForAuctions(
+            @RequestParam(required = false) String searchTerm,
+            @RequestParam(required = false) List<String> categories) throws EmptyParametersException {
+        if (searchTerm.isEmpty() || searchTerm.isBlank()) throw new EmptyParametersException("\"searchTerm\" cannot be null or empty string!");
+        else {
+            List<Item> items = itemService.findItemsUpForAuction(searchTerm, categories);
+            return ResponseEntity.ok(items);
+        }
     }
 }

@@ -3,20 +3,21 @@ package com.exam.ingsw.dietideals24.controller;
 import com.exam.ingsw.dietideals24.model.Item;
 import com.exam.ingsw.dietideals24.model.Auction;
 import com.exam.ingsw.dietideals24.model.helper.RequestedAuctionDTO;
+import com.exam.ingsw.dietideals24.exception.EmptyParametersException;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import com.exam.ingsw.dietideals24.service.IAuctionService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.Collections;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 @RestController
-public class RegisterAuctionController {
+public class AuctionController {
     @Autowired
     @Qualifier("AuctionService")
     private IAuctionService auctionService;

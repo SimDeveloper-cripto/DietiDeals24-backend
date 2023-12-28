@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import com.exam.ingsw.dietideals24.repository.IItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 @Service("ItemService")
 public class ItemService implements IItemService {
     @Autowired
@@ -16,5 +18,10 @@ public class ItemService implements IItemService {
     public Integer createItem(Item item) {
         Item savedItem = itemRepository.save(item);
         return savedItem.getItemId();
+    }
+
+    @Override
+    public List<Item> findItemsUpForAuction(String searchTerm, List<String> categories) {
+        return itemRepository.findItemsBySearchTermAndCategories(searchTerm, categories);
     }
 }
