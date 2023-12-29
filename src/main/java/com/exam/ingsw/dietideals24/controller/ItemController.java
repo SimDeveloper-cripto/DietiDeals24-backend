@@ -1,17 +1,17 @@
 package com.exam.ingsw.dietideals24.controller;
 
-import com.exam.ingsw.dietideals24.exception.EmptyParametersException;
 import com.exam.ingsw.dietideals24.model.Item;
 import com.exam.ingsw.dietideals24.service.IItemService;
 import com.exam.ingsw.dietideals24.model.helper.RequestedItemDTO;
+import com.exam.ingsw.dietideals24.exception.EmptyParametersException;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import java.util.ArrayList;
 import java.util.List;
-
 import com.exam.ingsw.dietideals24.exception.ImageContentIsNullException;
 
 @RestController
@@ -45,14 +45,25 @@ public class ItemController {
         return ResponseEntity.ok(itemId);
     }
 
-    @GetMapping("/item/findItemsUpForAuction")
-    public ResponseEntity<List<Item>> findItemsUpForAuctions(
-            @RequestParam(required = false) String searchTerm,
+    @GetMapping("/item/imageContent")
+    public ResponseEntity<byte[]> retrieveItemImageContent(
+            @RequestParam String searchTerm,
             @RequestParam(required = false) List<String> categories) throws EmptyParametersException {
         if (searchTerm.isEmpty() || searchTerm.isBlank()) throw new EmptyParametersException("\"searchTerm\" cannot be null or empty string!");
         else {
-            List<Item> items = itemService.findItemsUpForAuction(searchTerm, categories);
-            return ResponseEntity.ok(items);
+            byte[] content = itemService.retrieveByteArray(searchTerm, categories);
+            return ResponseEntity.ok(content);
+        }
+    }
+
+    @GetMapping("/item/findItemsUpForAuction")
+    public ResponseEntity<List<RequestedItemDTO>> findItemsUpForAuctions(
+            @RequestParam String searchTerm,
+            @RequestParam(required = false) List<String> categories) throws EmptyParametersException {
+        if (searchTerm.isEmpty() || searchTerm.isBlank()) throw new EmptyParametersException("\"searchTerm\" cannot be null or empty string!");
+        else {
+            List<RequestedItemDTO> itemDTOS = itemService.findItemsUpForAuction(searchTerm, categories);
+            return ResponseEntity.ok(itemDTOS);
         }
     }
 }

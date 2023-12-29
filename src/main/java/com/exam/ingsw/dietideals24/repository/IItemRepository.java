@@ -9,11 +9,20 @@ import org.springframework.data.repository.CrudRepository;
 
 @Repository
 public interface IItemRepository extends CrudRepository<Item, Integer> {
-    @Query("SELECT i FROM Item i " +
+    @Query("SELECT i.itemId, i.name, i.description, i.basePrize, i.category " +
+            "FROM Item i " +
             "WHERE LOWER(i.description) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR " +
             "LOWER(i.name) LIKE LOWER(CONCAT('%', :searchTerm, '%')) AND " +
             "(:categories IS NULL OR i.category IN :categories)")
-    List<Item> findItemsBySearchTermAndCategories(
+    List<Object[]> findItemsBySearchTermAndCategories(
+            @Param("searchTerm") String searchTerm,
+            @Param("categories") List<String> categories);
+
+    @Query("SELECT i.image FROM Item i " +
+            "WHERE LOWER(i.description) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR " +
+            "LOWER(i.name) LIKE LOWER(CONCAT('%', :searchTerm, '%')) AND " +
+            "(:categories IS NULL OR i.category IN :categories)")
+    byte[] getImageContent(
             @Param("searchTerm") String searchTerm,
             @Param("categories") List<String> categories);
 }
