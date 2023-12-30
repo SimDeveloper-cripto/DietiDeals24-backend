@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import java.util.ArrayList;
 import java.util.List;
 import com.exam.ingsw.dietideals24.exception.ImageContentIsNullException;
 
@@ -45,25 +44,29 @@ public class ItemController {
         return ResponseEntity.ok(itemId);
     }
 
-    @GetMapping("/item/imageContent")
-    public ResponseEntity<byte[]> retrieveItemImageContent(
+    /* [FEATURED ITEMS UP FOR AUCTION SECTION] */
+    @GetMapping("/item/findItemsUpForFeaturedAuction")
+    public ResponseEntity<List<RequestedItemDTO>> findItemsUpForAuctions(
             @RequestParam String searchTerm,
-            @RequestParam(required = false) List<String> categories) throws EmptyParametersException {
+            @RequestParam(required = false) List<String> categories,
+            @RequestParam Integer userId) throws EmptyParametersException {
         if (searchTerm.isEmpty() || searchTerm.isBlank()) throw new EmptyParametersException("\"searchTerm\" cannot be null or empty string!");
+        else if (userId == null)  throw new EmptyParametersException("User's ID cannot be null!");
         else {
-            byte[] content = itemService.retrieveByteArray(searchTerm, categories);
-            return ResponseEntity.ok(content);
+            List<RequestedItemDTO> items = itemService.findItemsUpForFeaturedAuction(searchTerm, categories, userId);
+            return ResponseEntity.ok(items);
         }
     }
 
-    @GetMapping("/item/findItemsUpForAuction")
-    public ResponseEntity<List<RequestedItemDTO>> findItemsUpForAuctions(
-            @RequestParam String searchTerm,
-            @RequestParam(required = false) List<String> categories) throws EmptyParametersException {
-        if (searchTerm.isEmpty() || searchTerm.isBlank()) throw new EmptyParametersException("\"searchTerm\" cannot be null or empty string!");
-        else {
-            List<RequestedItemDTO> itemDTOS = itemService.findItemsUpForAuction(searchTerm, categories);
-            return ResponseEntity.ok(itemDTOS);
+    @GetMapping("/item/findItemImage")
+    public ResponseEntity<byte[]> findItemImage(
+            @RequestParam Integer itemId,
+            @RequestParam String name) throws EmptyParametersException {
+        if (itemId == null) throw new EmptyParametersException("ItemID cannot be null");
+        else if (name.isEmpty() || name.isBlank()) throw new EmptyParametersException("Item's name cannot be null or empty string!");
+        else  {
+            byte[] imageContent = itemService.findItemImageContent(itemId, name);
+            return ResponseEntity.ok(imageContent);
         }
     }
 }

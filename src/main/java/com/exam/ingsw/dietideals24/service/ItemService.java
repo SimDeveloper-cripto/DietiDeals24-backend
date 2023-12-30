@@ -1,13 +1,14 @@
 package com.exam.ingsw.dietideals24.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.exam.ingsw.dietideals24.model.User;
 import org.springframework.stereotype.Service;
 import com.exam.ingsw.dietideals24.model.Item;
-import com.exam.ingsw.dietideals24.model.helper.RequestedItemDTO;
 import com.exam.ingsw.dietideals24.repository.IItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
-import java.util.ArrayList;
+import com.exam.ingsw.dietideals24.model.helper.RequestedItemDTO;
 
 @Service("ItemService")
 public class ItemService implements IItemService {
@@ -23,24 +24,27 @@ public class ItemService implements IItemService {
     }
 
     @Override
-    public byte[] retrieveByteArray(String searchTerm, List<String> categories) {
-        return itemRepository.getImageContent(searchTerm, categories);
+    public List<RequestedItemDTO> findItemsUpForFeaturedAuction(String searchTerm, List<String> categories, Integer userId) {
+        List<Object[]> result = itemRepository.findItemsForFeaturedAuction(searchTerm, categories, userId);
+
+        List<RequestedItemDTO> items = new ArrayList<>();
+        for (Object[] record : result) {
+            RequestedItemDTO itemDTO = new RequestedItemDTO();
+
+            itemDTO.setItemId((Integer) record[0]);
+            itemDTO.setName((String) record[1]);
+            itemDTO.setDescription((String) record[2]);
+            itemDTO.setCategory((String) record[3]);
+            itemDTO.setBasePrize((Float) record[4]);
+            itemDTO.setUser((User) record[5]);
+            items.add(itemDTO);
+        }
+
+        return items;
     }
 
     @Override
-    public List<RequestedItemDTO> findItemsUpForAuction(String searchTerm, List<String> categories) {
-        List<Object[]> resultList = itemRepository.findItemsBySearchTermAndCategories(searchTerm, categories);
-
-        List<RequestedItemDTO> itemDTOS = new ArrayList<>();
-        for (Object[] object : resultList) {
-            RequestedItemDTO itemDTO = new RequestedItemDTO();
-            itemDTO.setItemId((Integer) object[0]);
-            itemDTO.setName((String) object[1]);
-            itemDTO.setDescription((String) object[2]);
-            itemDTO.setBasePrize((Float) object[3]);
-            itemDTO.setCategory((String) object[4]);
-            itemDTOS.add(itemDTO);
-        }
-        return itemDTOS;
+    public byte[] findItemImageContent(Integer itemID, String name) {
+        return itemRepository.findImageByIdAndName(itemID, name);
     }
 }

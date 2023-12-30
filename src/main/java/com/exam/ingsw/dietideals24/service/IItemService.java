@@ -6,6 +6,8 @@ import com.exam.ingsw.dietideals24.model.helper.RequestedItemDTO;
 
 public interface IItemService {
     Integer createItem(Item item);
-    byte[] retrieveByteArray(String searchTerm, List<String> categories);
-    List<RequestedItemDTO> findItemsUpForAuction(String searchTerm, List<String> selectedCategories);
+
+    /* [FEATURED ITEMS UP FOR AUCTION SECTION] */
+    List<RequestedItemDTO> findItemsUpForFeaturedAuction(String searchTerm, List<String> selectedCategories, Integer userId);
+    byte[] findItemImageContent(Integer itemId, String name);
 }
