@@ -25,6 +25,17 @@ public interface IItemRepository extends CrudRepository<Item, Integer> {
             @Param("categories") List<String> categories,
             @Param("userId") Integer userId); // Given: searchTerm, categories, userId
 
+    /* [CREATED BY USER ITEMS UP FOR AUCTION]
+        - ONLY items that have been auctioned by the user
+    **/
+    @Query("SELECT DISTINCT i.itemId, i.name, i.description, i.category, i.basePrize, i.user  FROM Item i " +
+            "LEFT JOIN i.auction a " +
+            "LEFT JOIN a.offers o " +
+            "WHERE i.user.userId = :userId AND i.user.email = :email AND (o.user IS NULL OR o.user.userId <> :userId)")
+    List<Object[]> findCreatedByUserItems(
+            @Param("userId") Integer userId,
+            @Param("email") String email); // Given: userId, email (which is unique)
+
     @Query("SELECT i.image FROM Item i " +
             "WHERE i.itemId = :itemId AND i.name = :name")
     byte[] findImageByIdAndName(

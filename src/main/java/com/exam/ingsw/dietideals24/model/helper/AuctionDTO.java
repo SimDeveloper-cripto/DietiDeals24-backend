@@ -8,17 +8,17 @@ import com.exam.ingsw.dietideals24.enums.Type;
     - The real Auction (the one stored inside the db) is created using this "fake" object.
 **/
 
-public class RequestedAuctionDTO {
+public class AuctionDTO {
     private int ownerId;
     private boolean active;
     private Type auctionType;
     private Time expirationTime;
     private String expirationDate;
     private float currentOfferValue;
-    private RequestedItemDTO requestedItem;
+    private ItemDTO requestedItem;
     private Integer auctionId,requestedItemId;
 
-    public RequestedAuctionDTO() {}
+    public AuctionDTO() {}
 
     public Integer getAuctionId() {
         return auctionId;
@@ -84,11 +84,11 @@ public class RequestedAuctionDTO {
         this.expirationTime = expirationTime;
     }
 
-    public RequestedItemDTO getRequestedItemDTO() {
+    public ItemDTO getRequestedItemDTO() {
         return requestedItem;
     }
 
-    public void setRequestedItemDTO(RequestedItemDTO requestedItem) {
+    public void setRequestedItemDTO(ItemDTO requestedItem) {
         this.requestedItem = requestedItem;
     }
 }

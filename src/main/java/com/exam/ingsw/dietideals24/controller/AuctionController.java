@@ -2,8 +2,7 @@ package com.exam.ingsw.dietideals24.controller;
 
 import com.exam.ingsw.dietideals24.model.Item;
 import com.exam.ingsw.dietideals24.model.Auction;
-import com.exam.ingsw.dietideals24.model.helper.RequestedAuctionDTO;
-import com.exam.ingsw.dietideals24.exception.EmptyParametersException;
+import com.exam.ingsw.dietideals24.model.helper.AuctionDTO;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,8 +10,6 @@ import com.exam.ingsw.dietideals24.service.IAuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import java.util.List;
-import java.util.Collections;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -23,7 +20,7 @@ public class AuctionController {
     private IAuctionService auctionService;
 
     @PostMapping("/auction/addSilentAuction")
-    public ResponseEntity<Void> createAuction(@RequestBody RequestedAuctionDTO requestedAuction) {
+    public ResponseEntity<Void> createAuction(@RequestBody AuctionDTO requestedAuction) {
         Integer itemId = requestedAuction.getRequestedItemId();
         Item item = new Item();
         item.setItemId(itemId); // Needed by JPA to insert correctly the record (have a look at the relationships)

@@ -1,8 +1,9 @@
 package com.exam.ingsw.dietideals24.controller;
 
+import com.exam.ingsw.dietideals24.model.User;
 import com.exam.ingsw.dietideals24.model.Item;
 import com.exam.ingsw.dietideals24.service.IItemService;
-import com.exam.ingsw.dietideals24.model.helper.RequestedItemDTO;
+import com.exam.ingsw.dietideals24.model.helper.ItemDTO;
 import com.exam.ingsw.dietideals24.exception.EmptyParametersException;
 
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class ItemController {
     }
 
     @PostMapping("/item/addItem")
-    public ResponseEntity<Integer> createItem(@RequestBody RequestedItemDTO requestedItem) throws ImageContentIsNullException {
+    public ResponseEntity<Integer> createItem(@RequestBody ItemDTO requestedItem) throws ImageContentIsNullException {
         Item item = new Item();
         item.setName(requestedItem.getName());
         item.setDescription(requestedItem.getDescription());
@@ -46,16 +47,22 @@ public class ItemController {
 
     /* [FEATURED ITEMS UP FOR AUCTION SECTION] */
     @GetMapping("/item/findItemsUpForFeaturedAuction")
-    public ResponseEntity<List<RequestedItemDTO>> findItemsUpForAuctions(
+    public ResponseEntity<List<ItemDTO>> findItemsUpForAuctions(
             @RequestParam String searchTerm,
             @RequestParam(required = false) List<String> categories,
             @RequestParam Integer userId) throws EmptyParametersException {
         if (searchTerm.isEmpty() || searchTerm.isBlank()) throw new EmptyParametersException("\"searchTerm\" cannot be null or empty string!");
         else if (userId == null)  throw new EmptyParametersException("User's ID cannot be null!");
         else {
-            List<RequestedItemDTO> items = itemService.findItemsUpForFeaturedAuction(searchTerm, categories, userId);
+            List<ItemDTO> items = itemService.findItemsUpForFeaturedAuction(searchTerm, categories, userId);
             return ResponseEntity.ok(items);
         }
+    }
+
+    @GetMapping("/item/findAuctionedByUser")
+    public ResponseEntity<List<ItemDTO>> findItemsCreatedByUser(@RequestParam User user) {
+        List<ItemDTO> items = itemService.findItemsCreatedByUser(user);
+        return ResponseEntity.ok(items);
     }
 
     @GetMapping("/item/findItemImage")

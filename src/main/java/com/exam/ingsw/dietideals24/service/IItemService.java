@@ -1,13 +1,18 @@
 package com.exam.ingsw.dietideals24.service;
 
 import java.util.List;
+import com.exam.ingsw.dietideals24.model.User;
 import com.exam.ingsw.dietideals24.model.Item;
-import com.exam.ingsw.dietideals24.model.helper.RequestedItemDTO;
+import com.exam.ingsw.dietideals24.model.helper.ItemDTO;
 
 public interface IItemService {
     Integer createItem(Item item);
 
     /* [FEATURED ITEMS UP FOR AUCTION SECTION] */
-    List<RequestedItemDTO> findItemsUpForFeaturedAuction(String searchTerm, List<String> selectedCategories, Integer userId);
+    List<ItemDTO> findItemsUpForFeaturedAuction(String searchTerm, List<String> selectedCategories, Integer userId);
+
+    /* /* [ONLY CREATED BY USER ITEMS UP FOR AUCTION] */
+    List<ItemDTO> findItemsCreatedByUser(User user);
+
     byte[] findItemImageContent(Integer itemId, String name);
 }

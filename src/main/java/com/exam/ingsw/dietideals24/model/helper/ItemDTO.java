@@ -7,13 +7,13 @@ import com.exam.ingsw.dietideals24.model.User;
     - The real Item (the one stored inside the db) is created using this "fake" object.
 **/
 
-public class RequestedItemDTO {
+public class ItemDTO {
     private User user;
     private Integer itemId;
     private float basePrize;
     private String name, description, category;
 
-    public RequestedItemDTO() {}
+    public ItemDTO() {}
 
     public Integer getItemId() {
         return itemId;
