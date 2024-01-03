@@ -62,6 +62,25 @@ public class ItemService implements IItemService {
     }
 
     @Override
+    public List<ItemDTO> findItemsUserWants(Integer userId, String email, String password) {
+        List<Object[]> result = itemRepository.findItemsWantedByTheUser(userId, email, password);
+
+        List<ItemDTO> items = new ArrayList<>();
+        for (Object[] record : result) {
+            ItemDTO itemDTO = new ItemDTO();
+
+            itemDTO.setItemId((Integer) record[0]);
+            itemDTO.setName((String) record[1]);
+            itemDTO.setDescription((String) record[2]);
+            itemDTO.setCategory((String) record[3]);
+            itemDTO.setBasePrize((Float) record[4]);
+            itemDTO.setUser((User) record[5]);
+            items.add(itemDTO);
+        }
+        return items;
+    }
+
+    @Override
     public byte[] findItemImageContent(Integer itemID, String name) {
         return itemRepository.findImageByIdAndName(itemID, name);
     }

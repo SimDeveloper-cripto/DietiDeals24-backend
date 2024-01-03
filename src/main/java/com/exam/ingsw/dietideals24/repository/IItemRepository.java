@@ -36,6 +36,14 @@ public interface IItemRepository extends CrudRepository<Item, Integer> {
             @Param("userId") Integer userId,
             @Param("email") String email); // Given: userId, email (which is unique)
 
+    /* [ITEMS FOR WICH THE USER PARTECIPATES IN AN AUCTION]
+    **/
+    // @Query("")
+    List<Object[]> findItemsWantedByTheUser(
+            @Param("userId") Integer userId,
+            @Param("email") String email,
+            @Param("password") String password); // Given: userId, email (which is unique), password
+
     @Query("SELECT i.image FROM Item i " +
             "WHERE i.itemId = :itemId AND i.name = :name")
     byte[] findImageByIdAndName(
