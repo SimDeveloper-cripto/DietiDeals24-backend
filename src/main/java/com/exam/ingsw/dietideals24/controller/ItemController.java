@@ -37,7 +37,7 @@ public class ItemController {
         item.setUser(requestedItem.getUser());
 
         if (itemImageContent != null)
-            item.setImage(itemImageContent);
+            item.setImage(this.itemImageContent);
         else
             throw new ImageContentIsNullException("The image of the Item received is null!");
 

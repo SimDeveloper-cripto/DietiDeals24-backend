@@ -15,7 +15,7 @@ public interface IItemService {
     List<ItemDTO> findItemsCreatedByUser(User user);
 
     /* [ITEMS FOR WICH THE USER PARTECIPATES IN AN AUCTION] */
-    // List<ItemDTO> findItemsUserWants(Integer userId, String email, String password);
+    List<ItemDTO> findItemsWantedByUser(Integer userId, String email, String password);
 
     byte[] findItemImageContent(Integer itemId, String name);
 }

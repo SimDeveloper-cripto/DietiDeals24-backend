@@ -21,7 +21,7 @@ public interface IItemRepository extends CrudRepository<Item, Integer> {
             "(o.user.userId <> :userId OR o.user.userId IS NULL) AND " +
             "(:categories IS NULL OR i.category IN :categories) AND " +
             "(:searchTerm IS NULL OR i.name LIKE %:searchTerm% OR i.description LIKE %:searchTerm%) AND " +
-            "a.active = true OR a.active IS NULL") // a.active IS NULL is necessary because of the left-join
+            "(a.active = true OR a.active IS NULL)") // a.active IS NULL is necessary because of the left-join
     List<Object[]> findItemsForFeaturedAuction(
             @Param("searchTerm") String searchTerm,
             @Param("categories") List<String> categories,
