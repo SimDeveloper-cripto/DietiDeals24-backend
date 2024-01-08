@@ -65,7 +65,7 @@ public class ItemController {
         return ResponseEntity.ok(items);
     }
 
-    @GetMapping("/item/findItemsForWhichTheUserPartecipateAuction")
+    @GetMapping("/item/findItemsWantedByUser")
     public ResponseEntity<List<ItemDTO>> findItemsForUser( // I don't want to make the name too long
             @RequestParam Integer userId,
             @RequestParam String email,
@@ -73,7 +73,7 @@ public class ItemController {
         if (userId == null || (email.isEmpty() || email.isBlank()) || (password.isEmpty() || password.isBlank())) {
             throw new EmptyParametersException("At least one of the parameters provided is NULL or empty string!");
         } else {
-            List<ItemDTO> items = itemService.findItemsUserWants(userId, email, password);
+            List<ItemDTO> items = itemService.findItemsWantedByUser(userId, email, password);
             return ResponseEntity.ok(items);
         }
     }

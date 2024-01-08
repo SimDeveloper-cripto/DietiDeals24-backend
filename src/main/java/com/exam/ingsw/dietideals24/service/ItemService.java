@@ -62,8 +62,8 @@ public class ItemService implements IItemService {
     }
 
     @Override
-    public List<ItemDTO> findItemsUserWants(Integer userId, String email, String password) {
-        List<Object[]> result = itemRepository.findItemsWantedByTheUser(userId, email, password);
+    public List<ItemDTO> findItemsWantedByUser(Integer userId, String email, String password) {
+        List<Object[]> result = itemRepository.findItemsForUser(userId, email, password);
 
         List<ItemDTO> items = new ArrayList<>();
         for (Object[] record : result) {
