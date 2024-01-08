@@ -13,7 +13,7 @@ public interface IItemRepository extends CrudRepository<Item, Integer> {
         - Only for active auctions
         - Items that have not been auctioned by the user and that have never bid on by him
     **/
-    @Query("SELECT DISTINCT i.itemId, i.name, i.description, i.category, i.basePrize, i.user  FROM Item i " +
+    @Query("SELECT DISTINCT i.itemId, i.name, i.description, i.category, i.basePrize, i.user FROM Item i " +
             "LEFT JOIN i.auction a " +
             "LEFT JOIN a.offers o " +
             "WHERE " +
@@ -31,7 +31,7 @@ public interface IItemRepository extends CrudRepository<Item, Integer> {
         - Only for active auctions
         - Only items that have been auctioned by the user
     **/
-    @Query("SELECT DISTINCT i.itemId, i.name, i.description, i.category, i.basePrize, i.user  FROM Item i " +
+    @Query("SELECT DISTINCT i.itemId, i.name, i.description, i.category, i.basePrize, i.user FROM Item i " +
             "LEFT JOIN i.auction a " +
             "LEFT JOIN a.offers o " +
             "WHERE i.user.userId = :userId AND i.user.email = :email AND (o.user IS NULL OR o.user.userId <> :userId) AND " +
@@ -44,7 +44,7 @@ public interface IItemRepository extends CrudRepository<Item, Integer> {
         - Only for active auctions
         - Items for which the user is auctioning (he did not create the auction for it)
     **/
-    @Query("SELECT DISTINCT i FROM Item i " +
+    @Query("SELECT DISTINCT i.itemId, i.name, i.description, i.category, i.basePrize, i.user FROM Item i " +
             "JOIN i.auction a " +
             "JOIN a.offers o " +
             "WHERE o.user.userId = :userId AND o.user.email = :email AND o.user.password = :password " +
