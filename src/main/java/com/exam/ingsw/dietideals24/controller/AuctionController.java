@@ -3,6 +3,7 @@ package com.exam.ingsw.dietideals24.controller;
 import com.exam.ingsw.dietideals24.model.Item;
 import com.exam.ingsw.dietideals24.model.Auction;
 import com.exam.ingsw.dietideals24.model.helper.AuctionDTO;
+import com.exam.ingsw.dietideals24.exception.ErrorWhenParsingException;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,20 +21,20 @@ public class AuctionController {
     private IAuctionService auctionService;
 
     @PostMapping("/auction/addSilentAuction")
-    public ResponseEntity<Void> createAuction(@RequestBody AuctionDTO requestedAuction) {
+    public ResponseEntity<Void> createAuction(
+            @RequestBody AuctionDTO requestedAuction) throws ErrorWhenParsingException {
         Integer itemId = requestedAuction.getRequestedItemId();
         Item item = new Item();
         item.setItemId(itemId); // Needed by JPA to insert correctly the record (have a look at the relationships)
 
-        // java.sql.Data conversion of the String related to the Date
-        java.sql.Date sqlDate = null;
+        java.sql.Date sqlDate;
         try {
             String dateString = requestedAuction.getExpirationDate();
             SimpleDateFormat inputDate = new SimpleDateFormat("yyyy-MM-dd");
             java.util.Date parsedDate  = inputDate.parse(dateString);
             sqlDate = new java.sql.Date(parsedDate.getTime());
         } catch (ParseException e) {
-            e.printStackTrace();
+            throw new ErrorWhenParsingException("SQL DATE PARSE ERROR, " + e.getMessage() + ", Cause: " + e.getCause());
         }
 
         Auction auction = new Auction();

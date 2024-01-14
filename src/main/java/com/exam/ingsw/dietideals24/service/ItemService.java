@@ -15,8 +15,6 @@ public class ItemService implements IItemService {
     @Autowired
     private IItemRepository itemRepository;
 
-    public ItemService() {}
-
     @Override
     public Integer createItem(Item item) {
         Item savedItem = itemRepository.save(item);
@@ -26,62 +24,39 @@ public class ItemService implements IItemService {
     @Override
     public List<ItemDTO> findItemsUpForFeaturedAuction(String searchTerm, List<String> categories, Integer userId) {
         List<Object[]> result = itemRepository.findItemsForFeaturedAuction(searchTerm, categories, userId);
-
-        List<ItemDTO> items = new ArrayList<>();
-        for (Object[] record : result) {
-            ItemDTO itemDTO = new ItemDTO();
-
-            itemDTO.setItemId((Integer) record[0]);
-            itemDTO.setName((String) record[1]);
-            itemDTO.setDescription((String) record[2]);
-            itemDTO.setCategory((String) record[3]);
-            itemDTO.setBasePrize((Float) record[4]);
-            itemDTO.setUser((User) record[5]);
-            items.add(itemDTO);
-        }
-        return items;
+        return createItemList(result);
     }
 
     @Override
     public List<ItemDTO> findItemsCreatedByUser(User user) {
         List<Object[]> result = itemRepository.findCreatedByUserItems(user.getUserId(), user.getEmail());
-
-        List<ItemDTO> items = new ArrayList<>();
-        for (Object[] record : result) {
-            ItemDTO itemDTO = new ItemDTO();
-
-            itemDTO.setItemId((Integer) record[0]);
-            itemDTO.setName((String) record[1]);
-            itemDTO.setDescription((String) record[2]);
-            itemDTO.setCategory((String) record[3]);
-            itemDTO.setBasePrize((Float) record[4]);
-            itemDTO.setUser((User) record[5]);
-            items.add(itemDTO);
-        }
-        return items;
+        return createItemList(result);
     }
 
     @Override
     public List<ItemDTO> findItemsWantedByUser(Integer userId, String email, String password) {
         List<Object[]> result = itemRepository.findItemsForUser(userId, email, password);
-
-        List<ItemDTO> items = new ArrayList<>();
-        for (Object[] record : result) {
-            ItemDTO itemDTO = new ItemDTO();
-
-            itemDTO.setItemId((Integer) record[0]);
-            itemDTO.setName((String) record[1]);
-            itemDTO.setDescription((String) record[2]);
-            itemDTO.setCategory((String) record[3]);
-            itemDTO.setBasePrize((Float) record[4]);
-            itemDTO.setUser((User) record[5]);
-            items.add(itemDTO);
-        }
-        return items;
+        return createItemList(result);
     }
 
     @Override
     public byte[] findItemImageContent(Integer itemID, String name) {
         return itemRepository.findImageByIdAndName(itemID, name);
+    }
+
+    private List<ItemDTO> createItemList(List<Object[]> result) {
+        List<ItemDTO> items = new ArrayList<>();
+        for (Object[] obs : result) {
+            ItemDTO itemDTO = new ItemDTO();
+
+            itemDTO.setItemId((Integer) obs[0]);
+            itemDTO.setName((String) obs[1]);
+            itemDTO.setDescription((String) obs[2]);
+            itemDTO.setCategory((String) obs[3]);
+            itemDTO.setBasePrize((Float) obs[4]);
+            itemDTO.setUser((User) obs[5]);
+            items.add(itemDTO);
+        }
+        return items;
     }
 }

@@ -15,10 +15,11 @@ public class AuctionDTO {
     private Time expirationTime;
     private String expirationDate;
     private float currentOfferValue;
+    private Integer auctionId;
     private ItemDTO requestedItem;
-    private Integer auctionId,requestedItemId;
+    private Integer requestedItemId;
 
-    public AuctionDTO() {}
+    /* GETTERS AND SETTERS */
 
     public Integer getAuctionId() {
         return auctionId;

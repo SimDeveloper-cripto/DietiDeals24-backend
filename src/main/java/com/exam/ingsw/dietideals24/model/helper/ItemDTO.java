@@ -11,9 +11,11 @@ public class ItemDTO {
     private User user;
     private Integer itemId;
     private float basePrize;
-    private String name, description, category;
+    private String name;
+    private String category;
+    private String description;
 
-    public ItemDTO() {}
+    /* GETTERS AND SETTERS */
 
     public Integer getItemId() {
         return itemId;

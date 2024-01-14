@@ -39,10 +39,6 @@ public class Auction {
     @OneToMany(mappedBy = "auction")
     private Set<Offer> offers;
 
-    /* CONSTRUCTOR */
-
-    public Auction() {}
-
     /* GETTERS AND SETTERS */
 
     public Integer getAuctionId() {

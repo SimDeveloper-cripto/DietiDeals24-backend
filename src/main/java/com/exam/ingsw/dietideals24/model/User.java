@@ -1,9 +1,8 @@
 package com.exam.ingsw.dietideals24.model;
 
 import java.util.Set;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "users")
@@ -30,20 +29,12 @@ public class User {
     @Column
     private String webSiteUrl;
 
-    // 1 to N Relationship with Item
-    // @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)  // a User can be registered even without items
-    // private Set<Item> items;
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)  // a User can be registered even without items
     @JsonIgnore
     private Set<Item> items;
 
     @OneToMany(mappedBy = "user")
     private Set<Offer> offers;
-
-    /* CONSTRUCTOR */
-
-    public User() {}
-
 
     /* GETTERS AND SETTERS */
 

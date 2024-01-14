@@ -34,10 +34,6 @@ public class Item {
     @OneToOne(mappedBy = "item")
     private Auction auction;
 
-    /* CONSTRUCTOR */
-
-    public Item() {}
-
     /* GETTERS AND SETTERS */
 
     public Integer getItemId() {

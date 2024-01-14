@@ -10,8 +10,6 @@ public class AuctionService implements IAuctionService {
     @Autowired
     private IAuctionRepository auctionRepository;
 
-    public AuctionService() {}
-
     @Override
     public void createAuction(Auction auction) {
         auctionRepository.save(auction);
