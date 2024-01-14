@@ -17,8 +17,8 @@
 	<description> Rest Api using Spring Boot and Spring Data JPA </description>
 	<properties>
 		<java.version> 21 </java.version>
-		<sonar.projectKey> INGSW2324BACKEND </sonar.projectKey>
-		<sonar.login> sqp_bfa1f36c9ae041cd8a4751a7802847a7c5f1e271 </sonar.login>
+		<sonar.projectKey> INGSW-2324-BACKEND </sonar.projectKey>
+		<sonar.login> ${env.SONAR_LOGIN} </sonar.login>
 		<sonar.host> http://localhost:9000 </sonar.host>
 	</properties>
 
