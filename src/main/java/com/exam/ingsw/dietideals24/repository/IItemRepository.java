@@ -12,6 +12,7 @@ public interface IItemRepository extends CrudRepository<Item, Integer> {
     /* [FEATURED ITEMS UP FOR AUCTION]
         - Only for active auctions
         - Items that have not been auctioned by the user and that have never bid on by him
+        - Given a searchTerm and a list of filter categories
     **/
     @Query("SELECT DISTINCT i.itemId, i.name, i.description, i.category, i.basePrize, i.user FROM Item i " +
             "LEFT JOIN i.auction a " +
@@ -22,10 +23,18 @@ public interface IItemRepository extends CrudRepository<Item, Integer> {
             "(:categories IS NULL OR i.category IN :categories) AND " +
             "(:searchTerm IS NULL OR i.name LIKE %:searchTerm% OR i.description LIKE %:searchTerm%) AND " +
             "(a.active = true OR a.active IS NULL)") // a.active IS NULL is necessary because of the left-join
-    List<Object[]> findItemsForFeaturedAuction(
+    List<Object[]> findFeaturedItemsBySearchTermAndCategory(
             @Param("searchTerm") String searchTerm,
             @Param("categories") List<String> categories,
             @Param("userId") Integer userId); // Given: searchTerm, categories, userId
+
+    @Query("SELECT DISTINCT i.itemId, i.name, i.description, i.category, i.basePrize, i.user FROM Item i " +
+            "LEFT JOIN i.auction a " +
+            "LEFT JOIN a.offers o " +
+            "WHERE i.user.userId <> :userId " +
+            "AND (a IS NULL OR o IS NULL)")
+    List<Object[]> findFeaturedItems(
+            @Param("userId") Integer userId); // Given User's credentials (userId and email (which is unique))
 
     /* [CREATED BY USER ITEMS UP FOR AUCTION]
         - Only for active auctions

@@ -22,14 +22,20 @@ public class ItemService implements IItemService {
     }
 
     @Override
-    public List<ItemDTO> findItemsUpForFeaturedAuction(String searchTerm, List<String> categories, Integer userId) {
-        List<Object[]> result = itemRepository.findItemsForFeaturedAuction(searchTerm, categories, userId);
+    public List<ItemDTO> findItemsUpForFeaturedAuctionBySearchTermAndCategory(String searchTerm, List<String> categories, Integer userId) {
+        List<Object[]> result = itemRepository.findFeaturedItemsBySearchTermAndCategory(searchTerm, categories, userId);
         return createItemList(result);
     }
 
     @Override
-    public List<ItemDTO> findItemsCreatedByUser(User user) {
-        List<Object[]> result = itemRepository.findCreatedByUserItems(user.getUserId(), user.getEmail());
+    public List<ItemDTO> findItemsUpForFeaturedAuction(Integer userId, String email) {
+        List<Object[]> result = itemRepository.findFeaturedItems(userId);
+        return createItemList(result);
+    }
+
+    @Override
+    public List<ItemDTO> findItemsCreatedByUser(Integer userId, String email) {
+        List<Object[]> result = itemRepository.findCreatedByUserItems(userId, email);
         return createItemList(result);
     }
 

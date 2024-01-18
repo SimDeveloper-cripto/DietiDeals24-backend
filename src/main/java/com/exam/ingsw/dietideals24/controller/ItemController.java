@@ -1,6 +1,5 @@
 package com.exam.ingsw.dietideals24.controller;
 
-import com.exam.ingsw.dietideals24.model.User;
 import com.exam.ingsw.dietideals24.model.Item;
 import com.exam.ingsw.dietideals24.service.IItemService;
 import com.exam.ingsw.dietideals24.model.helper.ItemDTO;
@@ -46,7 +45,7 @@ public class ItemController {
     }
 
     /* [FEATURED ITEMS UP FOR AUCTION SECTION] */
-    @GetMapping("/item/findItemsUpForFeaturedAuction")
+    @GetMapping("/item/findItemsUpForFeaturedAuctionBySearchTermAndCategory")
     public ResponseEntity<List<ItemDTO>> findItemsUpForAuctions(
             @RequestParam String searchTerm,
             @RequestParam(required = false) List<String> categories,
@@ -54,15 +53,35 @@ public class ItemController {
         if (searchTerm.isEmpty() || searchTerm.isBlank()) throw new EmptyParametersException("\"searchTerm\" cannot be null or empty string!");
         else if (userId == null)  throw new EmptyParametersException("User's ID cannot be null!");
         else {
-            List<ItemDTO> items = itemService.findItemsUpForFeaturedAuction(searchTerm, categories, userId);
+            List<ItemDTO> items = itemService.findItemsUpForFeaturedAuctionBySearchTermAndCategory(searchTerm, categories, userId);
+            return ResponseEntity.ok(items);
+        }
+    }
+
+    @GetMapping("/item/findItemsUpForFeaturedAuction")
+    public ResponseEntity<List<ItemDTO>> searchFeaturedItems(
+            @RequestParam Integer userId,
+            @RequestParam String email) throws EmptyParametersException {
+        if (email.isBlank() || email.isEmpty())
+            throw new EmptyParametersException("ItemController [searchFeaturedItems()] --> Null credentials!");
+        else if (userId == null)
+            throw new EmptyParametersException("User's ID cannot be null!");
+        else {
+            List<ItemDTO> items = itemService.findItemsUpForFeaturedAuction(userId, email);
             return ResponseEntity.ok(items);
         }
     }
 
     @GetMapping("/item/findAuctionedByUser")
-    public ResponseEntity<List<ItemDTO>> findItemsCreatedByUser(@RequestParam User user) {
-        List<ItemDTO> items = itemService.findItemsCreatedByUser(user);
-        return ResponseEntity.ok(items);
+    public ResponseEntity<List<ItemDTO>> findItemsCreatedByUser(
+            @RequestParam Integer userId,
+            @RequestParam String email) throws EmptyParametersException {
+        if (userId == null || (email.isEmpty() || email.isBlank())) {
+            throw new EmptyParametersException("At least one of the parameters provided is NULL or empty string!");
+        } else {
+            List<ItemDTO> items = itemService.findItemsCreatedByUser(userId, email);
+            return ResponseEntity.ok(items);
+        }
     }
 
     @GetMapping("/item/findItemsWantedByUser")
