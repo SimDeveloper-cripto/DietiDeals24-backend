@@ -1,6 +1,10 @@
 package com.exam.ingsw.dietideals24.repository;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+
+import com.exam.ingsw.dietideals24.enums.Type;
 import com.exam.ingsw.dietideals24.model.Auction;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,4 +21,6 @@ public interface IAuctionRepository extends CrudRepository<Auction, Integer> {
             @Param("name") String name,
             @Param("description") String description
     );
+
+    List<Auction> findByAuctionTypeAndActiveIsTrueAndExpirationDateBefore(Type auctionType, Date expirationDate);
 }

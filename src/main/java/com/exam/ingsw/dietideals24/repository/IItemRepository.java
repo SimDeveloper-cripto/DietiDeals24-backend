@@ -32,7 +32,8 @@ public interface IItemRepository extends CrudRepository<Item, Integer> {
             "LEFT JOIN i.auction a " +
             "LEFT JOIN a.offers o " +
             "WHERE i.user.userId <> :userId " +
-            "AND (a IS NULL OR o IS NULL)")
+            "AND (a IS NULL OR o IS NULL)" +
+            "AND a.active = true")
     List<Object[]> findFeaturedItems(
             @Param("userId") Integer userId); // Given User's credentials (userId and email (which is unique))
 

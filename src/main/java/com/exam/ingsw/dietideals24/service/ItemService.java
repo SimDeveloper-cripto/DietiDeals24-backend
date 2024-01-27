@@ -1,14 +1,15 @@
 package com.exam.ingsw.dietideals24.service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
 import com.exam.ingsw.dietideals24.model.User;
 import org.springframework.stereotype.Service;
 import com.exam.ingsw.dietideals24.model.Item;
+import com.exam.ingsw.dietideals24.model.helper.ItemDTO;
 import com.exam.ingsw.dietideals24.repository.IItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.exam.ingsw.dietideals24.model.helper.ItemDTO;
+import com.exam.ingsw.dietideals24.service.Interface.IItemService;
 
 @Service("ItemService")
 public class ItemService implements IItemService {

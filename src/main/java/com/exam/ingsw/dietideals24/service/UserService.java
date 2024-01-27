@@ -5,6 +5,7 @@ import com.exam.ingsw.dietideals24.model.User;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.exam.ingsw.dietideals24.repository.IUserRepository;
+import com.exam.ingsw.dietideals24.service.Interface.IUserService;
 import com.exam.ingsw.dietideals24.exception.UserNotFoundException;
 
 @Service("UserService")

@@ -1,7 +1,7 @@
 package com.exam.ingsw.dietideals24.controller;
 
 import com.exam.ingsw.dietideals24.model.Item;
-import com.exam.ingsw.dietideals24.service.IItemService;
+import com.exam.ingsw.dietideals24.service.Interface.IItemService;
 import com.exam.ingsw.dietideals24.model.helper.ItemDTO;
 import com.exam.ingsw.dietideals24.exception.EmptyParametersException;
 

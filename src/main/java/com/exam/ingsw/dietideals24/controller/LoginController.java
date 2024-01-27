@@ -1,7 +1,7 @@
 package com.exam.ingsw.dietideals24.controller;
 
 import com.exam.ingsw.dietideals24.model.User;
-import com.exam.ingsw.dietideals24.service.IUserService;
+import com.exam.ingsw.dietideals24.service.Interface.IUserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.beans.factory.annotation.Autowired;

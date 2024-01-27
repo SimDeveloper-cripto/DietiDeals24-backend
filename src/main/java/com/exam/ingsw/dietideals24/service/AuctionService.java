@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.exam.ingsw.dietideals24.model.Auction;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.exam.ingsw.dietideals24.repository.IAuctionRepository;
+import com.exam.ingsw.dietideals24.service.Interface.IAuctionService;
 
 @Service("AuctionService")
 public class AuctionService implements IAuctionService {

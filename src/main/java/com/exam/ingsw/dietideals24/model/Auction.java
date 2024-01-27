@@ -39,6 +39,16 @@ public class Auction {
     @OneToMany(mappedBy = "auction")
     private Set<Offer> offers;
 
+    /* METHODS */
+
+    public void updateStatusForSilentAuction() {
+        if (Type.SILENT.equals(auctionType) && expirationDate != null) {
+            if (expirationDate.before(new Date(System.currentTimeMillis()))) {
+                setActive(false); // Silent Auction has expired
+            }
+        }
+    }
+
     /* GETTERS AND SETTERS */
 
     public Integer getAuctionId() {
