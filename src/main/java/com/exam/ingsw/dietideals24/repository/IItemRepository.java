@@ -7,6 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.repository.CrudRepository;
 
+/* TODO
+    - RECUPERARE LE ASTE IN EVIDENZA SECONDO I SEGUENTI CRITERI (SCEGLIERNE UNO DEI DUE)
+        1. RECUPERARE LE ASTE ORDINANDOLE PER NUMERO DI PARTECIPANTI
+        2. RECUPERARE LE ASTE ORDINANDOLE PER I VALORE DI OFFERTA PIU' ALTO
+**/
+
 @Repository
 public interface IItemRepository extends CrudRepository<Item, Integer> {
     /* [FEATURED ITEMS UP FOR AUCTION]

@@ -15,6 +15,8 @@ import com.exam.ingsw.dietideals24.repository.IAuctionRepository;
     - It is used to check the expired silent auctions once when the application is started and every midnight and update them if necessary.
 **/
 
+// TODO: CREARE UN MECCANISMO SIMILE PER LE ASTE ALL'INGLESE (VINCITORE E PERDENTI DEVONO RICEVERE LA NOTIFICA)
+
 @Service
 public class AuctionSchedulerService {
     private final IAuctionRepository auctionRepository;
@@ -30,6 +32,16 @@ public class AuctionSchedulerService {
         checkForExpiredSilentAuctions();
     }
 
+    public List<String> getPendingNotifications() {
+        if (pendingNotifications != null) {
+            List<String> notifications = new ArrayList<>(pendingNotifications);
+            pendingNotifications.clear();
+            return notifications;
+        }
+        return null;
+    }
+
+    // TODO: NOTIFICARE ALL'UTENTE VINCITORE DELL'ASTA SILENZIOSA (PER IL MOMENTO DIAMO SOLO LA NOTIFICA GENERALE)
     @Scheduled(cron = "0 0 0 * * ?") // Execute every day at midnight
     public void checkForExpiredSilentAuctions() {
         List<Auction> expiredSilentAuctions = auctionRepository.findByAuctionTypeAndActiveIsTrueAndExpirationDateBefore(
@@ -38,13 +50,7 @@ public class AuctionSchedulerService {
         for (Auction auction : expiredSilentAuctions) {
             auction.updateStatusForSilentAuction();
             auctionRepository.save(auction);
-            pendingNotifications.add("Auction expired: " + auction.getAuctionId()); // TODO: TROVARE QUALCOSA DI MEGLIO DA INSERIRE
+            pendingNotifications.add("Auction for " + auction.getItem().getName() + " has expired. ID: " + auction.getAuctionId());
         }
-    }
-
-    public List<String> getPendingNotifications() {
-        List<String> notifications = new ArrayList<>(pendingNotifications);
-        pendingNotifications.clear();
-        return notifications;
     }
 }

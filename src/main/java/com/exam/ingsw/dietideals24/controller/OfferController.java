@@ -1,13 +1,11 @@
 package com.exam.ingsw.dietideals24.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import com.exam.ingsw.dietideals24.model.helper.OfferDTO;
-import com.exam.ingsw.dietideals24.service.Interface.IOfferService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.exam.ingsw.dietideals24.service.Interface.IOfferService;
 import com.exam.ingsw.dietideals24.exception.EmptyParametersException;
 
 @RestController
@@ -29,6 +27,14 @@ public class OfferController {
                 return ResponseEntity.ok(bestOffer);
             else
                 return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/offer/createOffer")
+    public void createOffer(@RequestBody OfferDTO offerDTO) throws EmptyParametersException {
+        if (offerDTO == null) throw new EmptyParametersException("Received a null reference for OfferDTO!");
+        else {
+            offerService.createOffer(offerDTO);
         }
     }
 }

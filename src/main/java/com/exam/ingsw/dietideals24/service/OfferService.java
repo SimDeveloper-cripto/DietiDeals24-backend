@@ -1,10 +1,12 @@
 package com.exam.ingsw.dietideals24.service;
 
+import com.exam.ingsw.dietideals24.model.Auction;
 import org.springframework.stereotype.Service;
 import com.exam.ingsw.dietideals24.model.Offer;
 import com.exam.ingsw.dietideals24.model.helper.OfferDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.exam.ingsw.dietideals24.repository.IOfferRepository;
+import com.exam.ingsw.dietideals24.utility.MySQLDateAndTimeParser;
 import com.exam.ingsw.dietideals24.service.Interface.IOfferService;
 
 @Service("OfferService")
@@ -27,5 +29,21 @@ public class OfferService implements IOfferService {
         }
 
         return null;
+    }
+
+    @Override
+    public void createOffer(OfferDTO offerDTO) {
+        Offer offer = new Offer();
+
+        Auction auction = new Auction();
+        auction.setAuctionId(offerDTO.getAuctionId());
+
+        offer.setUser(offerDTO.getUser());
+        offer.setOffer(offer.getOffer());
+        offer.setAuction(auction);
+        offer.setOfferDate(MySQLDateAndTimeParser.parseDate(offerDTO.getOfferDate()));
+        offer.setOfferTime(MySQLDateAndTimeParser.parseTime(offerDTO.getOfferTime()));
+
+        offerRepository.save(offer);
     }
 }
