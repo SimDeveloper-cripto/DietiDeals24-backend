@@ -1,7 +1,9 @@
 package com.exam.ingsw.dietideals24.controller;
 
 import com.exam.ingsw.dietideals24.model.User;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.exam.ingsw.dietideals24.model.helper.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import com.exam.ingsw.dietideals24.service.Interface.IUserService;
@@ -39,5 +41,20 @@ public class UserController {
         } else {
             return userService.createUser(user);
         }
+    }
+
+    @GetMapping("/user/findUser")
+    public ResponseEntity<UserDTO> retrieveUser(@RequestParam Integer userId, @RequestParam String email) throws EmptyParametersException {
+        if (userId == null || email == null || email.isEmpty()) throw new EmptyParametersException("retrieveUser() --> at least of parameter is NULL");
+        else {
+            UserDTO userDTO = userService.retrieveUser(userId, email);
+            return ResponseEntity.ok(userDTO);
+        }
+    }
+
+    @PostMapping("/user/updateUser")
+    public void update(@RequestBody UserDTO userDTO) throws EmptyParametersException {
+        if (userDTO == null) throw new EmptyParametersException("User to be updated is NULL!");
+        else userService.updateUser(userDTO);
     }
 }
