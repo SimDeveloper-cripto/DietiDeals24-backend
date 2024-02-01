@@ -3,7 +3,14 @@ package com.exam.ingsw.dietideals24.service.scheduler;
 import java.sql.Date;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Optional;
+
 import jakarta.annotation.PostConstruct;
+import com.exam.ingsw.dietideals24.model.User;
+import com.exam.ingsw.dietideals24.model.Offer;
+import com.exam.ingsw.dietideals24.repository.IOfferRepository;
+import com.exam.ingsw.dietideals24.service.NotificationService;
+
 import com.exam.ingsw.dietideals24.enums.Type;
 import org.springframework.stereotype.Service;
 import com.exam.ingsw.dietideals24.model.Auction;
@@ -19,29 +26,19 @@ import com.exam.ingsw.dietideals24.repository.IAuctionRepository;
 
 @Service
 public class AuctionSchedulerService {
-    private final IAuctionRepository auctionRepository;
-    private final List<String> pendingNotifications = new ArrayList<>();
-
     @Autowired
-    public AuctionSchedulerService(IAuctionRepository auctionRepository) {
-        this.auctionRepository = auctionRepository;
-    }
+    private IAuctionRepository auctionRepository;
+    @Autowired
+    private IOfferRepository offerRepository;
+    private final List<String> pendingNotifications = new ArrayList<>();
+    @Autowired
+    private NotificationService notificationService;
 
     @PostConstruct
     public void checkForExpiredSilentAuctionsOnStartUp() {
         checkForExpiredSilentAuctions();
     }
 
-    public List<String> getPendingNotifications() {
-        if (pendingNotifications != null) {
-            List<String> notifications = new ArrayList<>(pendingNotifications);
-            pendingNotifications.clear();
-            return notifications;
-        }
-        return null;
-    }
-
-    // TODO: NOTIFICARE ALL'UTENTE VINCITORE DELL'ASTA SILENZIOSA (PER IL MOMENTO DIAMO SOLO LA NOTIFICA GENERALE)
     @Scheduled(cron = "0 0 0 * * ?") // Execute every day at midnight
     public void checkForExpiredSilentAuctions() {
         List<Auction> expiredSilentAuctions = auctionRepository.findByAuctionTypeAndActiveIsTrueAndExpirationDateBefore(
@@ -50,7 +47,15 @@ public class AuctionSchedulerService {
         for (Auction auction : expiredSilentAuctions) {
             auction.updateStatusForSilentAuction();
             auctionRepository.save(auction);
-            pendingNotifications.add("Auction for " + auction.getItem().getName() + " has expired. ID: " + auction.getAuctionId());
+
+            Optional<Offer> retrievedOffer = offerRepository.findTopByAuctionAuctionIdOrderByOfferDateDescOfferTimeDesc(auction.getAuctionId());
+            if (retrievedOffer.isPresent()) {
+                Offer offer = retrievedOffer.get();
+                User winner = offer.getUser();
+
+                String notificationMessage = "Congratulazioni! Hai vinto l'asta per " + auction.getItem().getName() + ".";
+                notificationService.addNotificationForUser(winner.getUserId(), notificationMessage);
+            }
         }
     }
 }
