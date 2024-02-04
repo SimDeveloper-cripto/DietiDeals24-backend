@@ -15,8 +15,14 @@ public class UserService implements IUserService {
     private IUserRepository userRepository;
 
     @Override
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public UserDTO registerUser(UserDTO userDTO) {
+        userRepository.save(UserService.createUser(userDTO));
+
+        // Retrieval of the user's ID (DTO object does not have it, at least assigned)
+        User user = userRepository.findByEmailAndPassword(userDTO.getEmail(), userDTO.getPassword()).get();
+        userDTO.setUserId(user.getUserId());
+
+        return userDTO;
     }
 
     @Override
@@ -62,6 +68,7 @@ public class UserService implements IUserService {
         userRepository.save(user);
     }
 
+    /* Helper function used during the login process */
     private static UserDTO createUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setUserId(user.getUserId());
@@ -73,5 +80,16 @@ public class UserService implements IUserService {
         userDTO.setWebSiteUrl(user.getWebSiteUrl());
 
         return userDTO;
+    }
+
+    /* Helper function used during the registration process */
+    private static User createUser(UserDTO userDTO) {
+        User user = new User();
+        user.setName(userDTO.getName());
+        user.setSurname(userDTO.getSurname());
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(userDTO.getPassword());
+
+        return user;
     }
 }
