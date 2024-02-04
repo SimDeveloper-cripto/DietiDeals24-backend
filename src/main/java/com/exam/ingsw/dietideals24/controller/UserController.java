@@ -15,16 +15,14 @@ public class UserController {
     @Qualifier("UserService")
     private IUserService userService;
 
-    @GetMapping("/userLogin")
-    public User findUser(@RequestParam String email, @RequestParam String password) throws EmptyParametersException {
+    @PostMapping("/userLogin")
+    public UserDTO findUser(@RequestBody UserDTO userDTO) throws EmptyParametersException {
         User user = new User();
 
-        if ((email.isEmpty() || email.isBlank()) || (password.isEmpty() || password.isBlank()))
-            throw new EmptyParametersException("Login Error: At least one of email and password is an empty string!");
+        if (userDTO == null)
+            throw new EmptyParametersException("Login Error: DTO received is a NULL object!");
         else {
-            user.setEmail(email);
-            user.setPassword(password);
-            return userService.loginUser(user);
+            return userService.loginUser(userDTO);
         }
     }
 

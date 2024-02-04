@@ -20,10 +20,11 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User loginUser(User user) {
+    public UserDTO loginUser(UserDTO user) {
         Optional<User> userRetrieved = userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
         if (userRetrieved.isPresent()) {
-            return userRetrieved.get();
+            User loggedInUser = userRetrieved.get();
+            return UserService.createUserDTO(loggedInUser);
         } else {
             throw new UserNotFoundException("ERROR: User not found for Login!");
         }
@@ -59,5 +60,18 @@ public class UserService implements IUserService {
         user.setWebSiteUrl(userDTO.getWebSiteUrl());
 
         userRepository.save(user);
+    }
+
+    private static UserDTO createUserDTO(User user) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUserId(user.getUserId());
+        userDTO.setName(user.getName());
+        userDTO.setSurname(user.getSurname());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setPassword(user.getPassword());
+        userDTO.setBio(user.getBio());
+        userDTO.setWebSiteUrl(user.getWebSiteUrl());
+
+        return userDTO;
     }
 }

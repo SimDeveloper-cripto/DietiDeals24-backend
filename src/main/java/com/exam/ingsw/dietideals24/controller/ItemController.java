@@ -1,8 +1,8 @@
 package com.exam.ingsw.dietideals24.controller;
 
 import com.exam.ingsw.dietideals24.model.Item;
-import com.exam.ingsw.dietideals24.service.Interface.IItemService;
 import com.exam.ingsw.dietideals24.model.helper.ItemDTO;
+import com.exam.ingsw.dietideals24.service.Interface.IItemService;
 import com.exam.ingsw.dietideals24.exception.EmptyParametersException;
 
 import org.springframework.http.ResponseEntity;
@@ -35,9 +35,10 @@ public class ItemController {
         item.setBasePrize(requestedItem.getBasePrize());
         item.setUser(requestedItem.getUser());
 
-        if (itemImageContent != null)
+        if (itemImageContent != null) {
             item.setImage(this.itemImageContent);
-        else
+            this.itemImageContent = null;
+        } else
             throw new ImageContentIsNullException("The image of the Item received is null!");
 
         Integer itemId = itemService.createItem(item);
