@@ -11,11 +11,13 @@ import com.exam.ingsw.dietideals24.model.helper.AuctionDTO;
 import com.exam.ingsw.dietideals24.exception.EmptyParametersException;
 import com.exam.ingsw.dietideals24.exception.ErrorWhenParsingException;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import com.exam.ingsw.dietideals24.service.Interface.IAuctionService;
+import com.exam.ingsw.dietideals24.service.scheduler.AuctionSchedulerService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,6 +27,9 @@ public class AuctionController {
     @Autowired
     @Qualifier("AuctionService")
     private IAuctionService auctionService;
+
+    @Autowired
+    private AuctionSchedulerService auctionSchedulerService;
 
     @PostMapping("/auction/addAuction")
     public ResponseEntity<Void> createAuction(
@@ -85,6 +90,16 @@ public class AuctionController {
             } else {
                 return ResponseEntity.notFound().build();
             }
+        }
+    }
+
+    @PostMapping("/auction/endAuction")
+    public ResponseEntity<Void> endAuction(@RequestParam Integer auctionId) throws EmptyParametersException {
+        if (auctionId == null) throw new EmptyParametersException("endAuction: at least one parameter is NULL!");
+        else {
+            auctionService.closeAuction(auctionId);
+            auctionSchedulerService.checkForExpiredSilentAuctions();
+            return new ResponseEntity<>(HttpStatus.OK);
         }
     }
 

@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.exam.ingsw.dietideals24.service.NotificationService;
+import com.exam.ingsw.dietideals24.service.scheduler.SilentAuctionNotificationService;
 
 @RestController
 public class AuctionNotificationController {
     @Autowired
-    private NotificationService notificationService;
+    private SilentAuctionNotificationService notificationService;
 
     // TODO: FOR NOW IT ONLY WORKS FOR SILENT AUCTIONS
     @GetMapping("/auction/silent/notificationsForUser/pending")

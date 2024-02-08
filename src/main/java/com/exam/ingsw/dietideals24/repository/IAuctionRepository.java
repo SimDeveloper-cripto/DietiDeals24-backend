@@ -4,8 +4,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import jakarta.transaction.Transactional;
 import com.exam.ingsw.dietideals24.enums.Type;
 import com.exam.ingsw.dietideals24.model.Auction;
+import org.springframework.data.jpa.repository.Modifying;
+
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,4 +26,9 @@ public interface IAuctionRepository extends CrudRepository<Auction, Integer> {
     );
 
     List<Auction> findByAuctionTypeAndActiveIsTrueAndExpirationDateBefore(Type auctionType, Date expirationDate);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE Auction a SET a.active = false WHERE a.auctionId = :auctionId")
+    void closeAuction(@Param("auctionId") Integer auctionId);
 }

@@ -9,7 +9,6 @@ import jakarta.annotation.PostConstruct;
 import com.exam.ingsw.dietideals24.model.User;
 import com.exam.ingsw.dietideals24.model.Offer;
 import com.exam.ingsw.dietideals24.repository.IOfferRepository;
-import com.exam.ingsw.dietideals24.service.NotificationService;
 
 import com.exam.ingsw.dietideals24.enums.Type;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,7 @@ public class AuctionSchedulerService {
     private IOfferRepository offerRepository;
     private final List<String> pendingNotifications = new ArrayList<>();
     @Autowired
-    private NotificationService notificationService;
+    private SilentAuctionNotificationService notificationService;
 
     @PostConstruct
     public void checkForExpiredSilentAuctionsOnStartUp() {

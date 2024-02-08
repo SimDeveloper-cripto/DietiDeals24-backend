@@ -21,4 +21,9 @@ public class AuctionService implements IAuctionService {
     public Optional<Auction> findAuctionByItemIdOrNameOrDescription(Integer itemId, String name, String description) {
         return auctionRepository.findByItemIdOrItemNameOrItemDescription(itemId, name, description);
     }
+
+    @Override
+    public void closeAuction(Integer auctionId) {
+        auctionRepository.closeAuction(auctionId);
+    }
 }

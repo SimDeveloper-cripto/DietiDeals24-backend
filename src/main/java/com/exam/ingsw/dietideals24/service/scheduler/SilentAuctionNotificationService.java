@@ -1,11 +1,11 @@
-package com.exam.ingsw.dietideals24.service;
+package com.exam.ingsw.dietideals24.service.scheduler;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.stereotype.Service;
 
 @Service
-public class NotificationService {
+public class SilentAuctionNotificationService {
     private final Map<Integer, List<String>> userNotifications = new ConcurrentHashMap<>();
 
     public void addNotificationForUser(Integer userId, String notification) {
