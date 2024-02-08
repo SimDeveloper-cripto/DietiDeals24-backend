@@ -1,5 +1,6 @@
 package com.exam.ingsw.dietideals24.controller;
 
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.exam.ingsw.dietideals24.model.helper.OfferDTO;
@@ -14,6 +15,7 @@ public class OfferController {
     @Qualifier("OfferService")
     private IOfferService offerService;
 
+    /* [DESCRIPTION] Needed for English Auctions */
     @GetMapping("/offer/getBestOffer")
     public ResponseEntity<OfferDTO> getBestOffer(
             @RequestParam Integer itemId,
@@ -27,6 +29,23 @@ public class OfferController {
                 return ResponseEntity.ok(bestOffer);
             else
                 return ResponseEntity.notFound().build();
+        }
+    }
+
+    /* [DESCRIPTION] Needed for Silent Auctions */
+    @GetMapping("/offer/getOffers")
+    public ResponseEntity<List<OfferDTO>> getOffers(
+            @RequestParam Integer itemId,
+            @RequestParam Integer auctionId) throws EmptyParametersException {
+        if (itemId == null || auctionId == null)
+            throw new EmptyParametersException("Error: AuctionController --> getBestOffer() --> itemId or auctionId is NULL!");
+        else {
+            List<OfferDTO> offers = offerService.getOffers(itemId, auctionId);
+
+            if (offers == null || offers.isEmpty())
+                return ResponseEntity.notFound().build();
+            else
+                return ResponseEntity.ok(offers);
         }
     }
 

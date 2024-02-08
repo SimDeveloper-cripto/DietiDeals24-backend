@@ -1,5 +1,8 @@
 package com.exam.ingsw.dietideals24.service;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import org.springframework.stereotype.Service;
 import com.exam.ingsw.dietideals24.model.Offer;
 import com.exam.ingsw.dietideals24.model.Auction;
@@ -47,5 +50,24 @@ public class OfferService implements IOfferService {
         offer.setOfferTime(MySQLDateAndTimeParser.parseTime(offerDTO.getOfferTime()));
 
         offerRepository.save(offer);
+    }
+
+    @Override
+    public List<OfferDTO> getOffers(Integer itemId, Integer auctionId) {
+        List<Offer> offers = offerRepository.findOffers(itemId, auctionId);
+
+        List<OfferDTO> offerDTOList = new ArrayList<>();
+        for (Offer o : offers) {
+            OfferDTO offerDTO = new OfferDTO();
+            offerDTO.setOfferId(o.getOfferId());
+            offerDTO.setAuctionId(o.getAuction().getAuctionId());
+            offerDTO.setUser(o.getUser());
+            offerDTO.setOffer(o.getOffer());
+            offerDTO.setOfferDate(MySQLDateAndTimeParser.parseDateToString(o.getOfferDate()));
+            offerDTO.setOfferTime(MySQLDateAndTimeParser.parseTimeToString(o.getOfferTime()));
+
+            offerDTOList.add(offerDTO);
+        }
+        return offerDTOList;
     }
 }

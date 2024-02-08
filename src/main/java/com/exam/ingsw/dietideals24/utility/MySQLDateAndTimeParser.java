@@ -15,4 +15,14 @@ public class MySQLDateAndTimeParser {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss.SSSSSS");
         return LocalTime.parse(timeString, formatter);
     }
+
+    public static String parseDateToString(LocalDate date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return date.format(formatter);
+    }
+
+    public static String parseTimeToString(LocalTime time) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss.SSSSSS");
+        return time.format(formatter);
+    }
 }
