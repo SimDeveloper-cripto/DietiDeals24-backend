@@ -1,23 +1,23 @@
 package com.exam.ingsw.dietideals24.model.helper;
 
+import java.io.Serializable;
 import com.exam.ingsw.dietideals24.model.User;
-// import com.exam.ingsw.dietideals24.model.Auction;
 
 /* [CLASS DESCRIPTION]
     - This object is sent by the client when a request to get/create an Offer occurs.
     - The real Offer (the one stored inside the db) is created using this "fake" object.
 **/
 
-public class OfferDTO {
+public class OfferDTO implements Serializable {
     private Long offerId;
     private Integer auctionId;
     private User user;
-
-    // private Auction auction; // We don't need the auction
-
     private float offer;
     private String offerDate;
     private String offerTime;
+
+    /* CONSTRUCTOR */
+    public OfferDTO() {}
 
     /* GETTERS AND SETTERS */
     public Long getOfferId() {

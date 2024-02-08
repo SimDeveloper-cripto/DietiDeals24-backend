@@ -3,6 +3,8 @@ package com.exam.ingsw.dietideals24.model;
 import java.util.Set;
 import java.sql.Date;
 import java.sql.Time;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import com.exam.ingsw.dietideals24.enums.Type;
 
@@ -37,6 +39,7 @@ public class Auction {
     private Item item;
 
     @OneToMany(mappedBy = "auction")
+    @JsonIgnore
     private Set<Offer> offers;
 
     /* METHODS */

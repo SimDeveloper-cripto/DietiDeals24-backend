@@ -34,6 +34,7 @@ public class User {
     private Set<Item> items;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private Set<Offer> offers;
 
     /* GETTERS AND SETTERS */

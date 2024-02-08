@@ -1,6 +1,7 @@
 package com.exam.ingsw.dietideals24.model.helper;
 
 import java.sql.Time;
+import java.io.Serializable;
 import com.exam.ingsw.dietideals24.enums.Type;
 
 /* [CLASS DESCRIPTION]
@@ -8,7 +9,7 @@ import com.exam.ingsw.dietideals24.enums.Type;
     - The real Auction (the one stored inside the db) is created using this "fake" object.
 **/
 
-public class AuctionDTO {
+public class AuctionDTO implements Serializable {
     private int ownerId;
     private boolean active;
     private Type auctionType;

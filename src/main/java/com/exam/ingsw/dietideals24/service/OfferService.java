@@ -56,6 +56,8 @@ public class OfferService implements IOfferService {
     public List<OfferDTO> getOffers(Integer itemId, Integer auctionId) {
         List<Offer> offers = offerRepository.findOffers(itemId, auctionId);
 
+        if (offers.isEmpty()) return null;
+
         List<OfferDTO> offerDTOList = new ArrayList<>();
         for (Offer o : offers) {
             OfferDTO offerDTO = new OfferDTO();

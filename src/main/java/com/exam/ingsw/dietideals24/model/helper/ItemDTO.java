@@ -1,5 +1,6 @@
 package com.exam.ingsw.dietideals24.model.helper;
 
+import java.io.Serializable;
 import com.exam.ingsw.dietideals24.model.User;
 
 /* [CLASS DESCRIPTION]
@@ -7,7 +8,7 @@ import com.exam.ingsw.dietideals24.model.User;
     - The real Item (the one stored inside the db) is created using this "fake" object.
 **/
 
-public class ItemDTO {
+public class ItemDTO implements Serializable {
     private User user;
     private Integer itemId;
     private float basePrize;

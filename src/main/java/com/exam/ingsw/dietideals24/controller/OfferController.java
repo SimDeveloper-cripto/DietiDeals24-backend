@@ -38,7 +38,7 @@ public class OfferController {
             @RequestParam Integer itemId,
             @RequestParam Integer auctionId) throws EmptyParametersException {
         if (itemId == null || auctionId == null)
-            throw new EmptyParametersException("Error: AuctionController --> getBestOffer() --> itemId or auctionId is NULL!");
+            throw new EmptyParametersException("Error: AuctionController --> getOffers() --> itemId or auctionId is NULL!");
         else {
             List<OfferDTO> offers = offerService.getOffers(itemId, auctionId);
 
