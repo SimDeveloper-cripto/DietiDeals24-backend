@@ -94,11 +94,13 @@ public class AuctionController {
     }
 
     @PostMapping("/auction/endAuction")
-    public ResponseEntity<Void> endAuction(@RequestParam Integer auctionId) throws EmptyParametersException {
-        if (auctionId == null) throw new EmptyParametersException("endAuction: at least one parameter is NULL!");
+    public ResponseEntity<Void> endAuction(
+            @RequestParam Integer auctionId,
+            @RequestParam Integer userId) throws EmptyParametersException {
+        if (auctionId == null || userId == null) throw new EmptyParametersException("endAuction: at least one parameter is NULL!");
         else {
             auctionService.closeAuction(auctionId);
-            auctionSchedulerService.checkForExpiredSilentAuctions();
+            auctionSchedulerService.notifyExpiredAuctionForUser(auctionId, userId);
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }

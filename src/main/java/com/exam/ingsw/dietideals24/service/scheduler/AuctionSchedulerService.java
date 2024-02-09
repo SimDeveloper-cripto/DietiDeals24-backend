@@ -1,13 +1,15 @@
 package com.exam.ingsw.dietideals24.service.scheduler;
 
 import java.sql.Date;
+import java.util.Optional;
+
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Optional;
 
 import jakarta.annotation.PostConstruct;
 import com.exam.ingsw.dietideals24.model.User;
 import com.exam.ingsw.dietideals24.model.Offer;
+import com.exam.ingsw.dietideals24.repository.IUserRepository;
 import com.exam.ingsw.dietideals24.repository.IOfferRepository;
 
 import com.exam.ingsw.dietideals24.enums.Type;
@@ -21,14 +23,17 @@ import com.exam.ingsw.dietideals24.repository.IAuctionRepository;
     - It is used to check the expired silent auctions once when the application is started and every midnight and update them if necessary.
 **/
 
-// TODO: CREARE UN MECCANISMO SIMILE PER LE ASTE ALL'INGLESE (VINCITORE E PERDENTI DEVONO RICEVERE LA NOTIFICA)
+// TODO: CREARE UN MECCANISMO SIMILE PER LE ASTE ALL'INGLESE
 
 @Service
 public class AuctionSchedulerService {
     @Autowired
-    private IAuctionRepository auctionRepository;
+    private IUserRepository userRepository;
     @Autowired
     private IOfferRepository offerRepository;
+    @Autowired
+    private IAuctionRepository auctionRepository;
+
     private final List<String> pendingNotifications = new ArrayList<>();
     @Autowired
     private SilentAuctionNotificationService notificationService;
@@ -38,11 +43,17 @@ public class AuctionSchedulerService {
         checkForExpiredSilentAuctions();
     }
 
-    @Scheduled(cron = "0 0 0 * * ?") // Execute every day at midnight
+    /* [DESCRIPTION]
+        - Execute once at startup
+        - Execute every day at midnight
+        - Execute once ended a silent auction
+    **/
+    @Scheduled(cron = "0 0 0 * * ?")
     public void checkForExpiredSilentAuctions() {
         List<Auction> expiredSilentAuctions = auctionRepository.findByAuctionTypeAndActiveIsTrueAndExpirationDateBefore(
                 Type.SILENT, new Date(System.currentTimeMillis()));
 
+        int count = 0;
         for (Auction auction : expiredSilentAuctions) {
             auction.updateStatusForSilentAuction();
             auctionRepository.save(auction);
@@ -52,9 +63,19 @@ public class AuctionSchedulerService {
                 Offer offer = retrievedOffer.get();
                 User winner = offer.getUser();
 
-                String notificationMessage = "Congratulazioni! Hai vinto l'asta per " + auction.getItem().getName() + ".";
+                String notificationMessage = "Congratulazioni " + offer.getUser().getName() + "! Hai vinto l'asta per " + auction.getItem().getName() + ".";
                 notificationService.addNotificationForUser(winner.getUserId(), notificationMessage);
+                count++;
             }
         }
+    }
+
+    public void notifyExpiredAuctionForUser(Integer auctionId, Integer userId) {
+        // Retrieve Data
+        User winner     = userRepository.findById(userId).get();
+        Auction auction = auctionRepository.findById(auctionId).get();
+
+        String notificationMessage = "Congratulazioni " + winner.getName() + "! Hai vinto l'asta per " + auction.getItem().getName() + ".";
+        notificationService.addNotificationForUser(winner.getUserId(), notificationMessage);
     }
 }

@@ -16,14 +16,15 @@ public class AuctionNotificationController {
     @Autowired
     private SilentAuctionNotificationService notificationService;
 
-    // TODO: FOR NOW IT ONLY WORKS FOR SILENT AUCTIONS
     @GetMapping("/auction/silent/notificationsForUser/pending")
     public ResponseEntity<List<String>> sendPendingNotificationsForUser(@RequestParam Integer userId) {
         List<String> notifications = notificationService.getNotificationsForUser(userId);
+        notificationService.clearNotificationsForUser(userId);
 
-        if (notifications.isEmpty())
+        if (notifications.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        else
+        } else {
             return new ResponseEntity<>(notifications, HttpStatus.OK);
+        }
     }
 }
