@@ -3,6 +3,7 @@ package com.exam.ingsw.dietideals24.repository;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.time.LocalDateTime;
 
 import jakarta.transaction.Transactional;
 import com.exam.ingsw.dietideals24.enums.Type;
@@ -26,6 +27,8 @@ public interface IAuctionRepository extends CrudRepository<Auction, Integer> {
     );
 
     List<Auction> findByAuctionTypeAndActiveIsTrueAndExpirationDateBefore(Type auctionType, Date expirationDate);
+
+    List<Auction> findByAuctionTypeAndActiveIsTrueAndExpirationTimeBefore(Type auctionType, LocalDateTime expirationTime);
 
     @Modifying
     @Transactional
