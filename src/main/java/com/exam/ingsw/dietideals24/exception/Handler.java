@@ -26,4 +26,14 @@ public class Handler {
     public ResponseEntity<String> handleImageContentIsNullException(ImageContentIsNullException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(AuctionNotFoundException.class)
+    public ResponseEntity<String> handleAuctionNotFoundException(AuctionNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(AuctionExpiredException.class)
+    public ResponseEntity<String> handleAuctionExpiredException(AuctionExpiredException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NO_CONTENT);
+    }
 }

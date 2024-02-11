@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.exam.ingsw.dietideals24.service.scheduler.SilentAuctionNotificationService;
+import com.exam.ingsw.dietideals24.service.scheduler.AuctionNotificationService;
 
 @RestController
 public class AuctionNotificationController {
     @Autowired
-    private SilentAuctionNotificationService notificationService;
+    private AuctionNotificationService notificationService;
 
-    @GetMapping("/auction/silent/notificationsForUser/pending")
+    @GetMapping("/auction/notificationsForUser/pending")
     public ResponseEntity<List<String>> sendPendingNotificationsForUser(@RequestParam Integer userId) {
         List<String> notifications = notificationService.getNotificationsForUser(userId);
         notificationService.clearNotificationsForUser(userId);

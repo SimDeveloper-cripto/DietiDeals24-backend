@@ -1,6 +1,7 @@
 package com.exam.ingsw.dietideals24.model.helper;
 
 import java.io.Serializable;
+import com.exam.ingsw.dietideals24.enums.Type;
 import com.exam.ingsw.dietideals24.model.User;
 
 /* [CLASS DESCRIPTION]
@@ -15,6 +16,7 @@ public class OfferDTO implements Serializable {
     private float offer;
     private String offerDate;
     private String offerTime;
+    private Type auctionType;
 
     /* CONSTRUCTOR */
     public OfferDTO() {}
@@ -66,5 +68,13 @@ public class OfferDTO implements Serializable {
 
     public void setOfferTime(String offerTime) {
         this.offerTime = offerTime;
+    }
+
+    public void setAuctionType(Type auctionType) {
+        this.auctionType = auctionType;
+    }
+
+    public Type getAuctionType() {
+        return auctionType;
     }
 }

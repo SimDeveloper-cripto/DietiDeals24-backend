@@ -2,7 +2,9 @@ package com.exam.ingsw.dietideals24.service;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.time.LocalDateTime;
 
+import com.exam.ingsw.dietideals24.enums.Type;
 import org.springframework.stereotype.Service;
 import com.exam.ingsw.dietideals24.model.Offer;
 import com.exam.ingsw.dietideals24.model.Auction;
@@ -11,12 +13,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.exam.ingsw.dietideals24.utility.MySQLDateAndTimeParser;
 
 import com.exam.ingsw.dietideals24.repository.IOfferRepository;
+import com.exam.ingsw.dietideals24.repository.IAuctionRepository;
 import com.exam.ingsw.dietideals24.service.Interface.IOfferService;
 
 @Service("OfferService")
 public class OfferService implements IOfferService {
     @Autowired
     private IOfferRepository offerRepository;
+
+    @Autowired
+    private IAuctionRepository auctionRepository;
 
     @Override
     public OfferDTO getTopOfferByItemIdAndAuctionId(Integer itemId, Integer auctionId) {
@@ -42,13 +48,18 @@ public class OfferService implements IOfferService {
         Auction auction = new Auction();
         auction.setAuctionId(offerDTO.getAuctionId());
 
-        offer.setUser(offerDTO.getUser());
+        if (offerDTO.getAuctionType().equals(Type.ENGLISH)) {
+            // Update "expirationTime of the Auction
+            LocalDateTime newExpirationTime = auction.getExpirationTime().plusSeconds(auction.getAmountOfTimeToReset());
+            auction.setExpirationTime(newExpirationTime);
+            auctionRepository.save(auction);
+        }
+
         offer.setUser(offerDTO.getUser());
         offer.setAuction(auction);
         offer.setOffer(offerDTO.getOffer());
         offer.setOfferDate(MySQLDateAndTimeParser.parseDate(offerDTO.getOfferDate()));
         offer.setOfferTime(MySQLDateAndTimeParser.parseTime(offerDTO.getOfferTime()));
-
         offerRepository.save(offer);
     }
 

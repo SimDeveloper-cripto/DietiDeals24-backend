@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SilentAuctionNotificationService {
+public class AuctionNotificationService {
     private final Map<Integer, List<String>> userNotifications = new ConcurrentHashMap<>();
 
     public void addNotificationForUser(Integer userId, String notification) {

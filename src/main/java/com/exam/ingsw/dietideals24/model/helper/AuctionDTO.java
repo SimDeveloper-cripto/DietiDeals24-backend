@@ -1,6 +1,5 @@
 package com.exam.ingsw.dietideals24.model.helper;
 
-import java.sql.Time;
 import java.io.Serializable;
 import com.exam.ingsw.dietideals24.enums.Type;
 
@@ -10,10 +9,10 @@ import com.exam.ingsw.dietideals24.enums.Type;
 **/
 
 public class AuctionDTO implements Serializable {
-    private int ownerId;
+    private int ownerId, amountOfTimeToReset;
     private boolean active;
     private Type auctionType;
-    private Time expirationTime;
+    private String expirationTime;
     private String expirationDate;
     private float currentOfferValue;
     private Integer auctionId;
@@ -78,12 +77,20 @@ public class AuctionDTO implements Serializable {
         this.expirationDate = expirationDate;
     }
 
-    public Time getExpirationTime() {
+    public String getExpirationTime() {
         return expirationTime;
     }
 
-    public void setExpirationTime(Time expirationTime) {
+    public void setExpirationTime(String expirationTime) {
         this.expirationTime = expirationTime;
+    }
+
+    public void setAmountOfTimeToReset(int timeToReset) {
+        this.amountOfTimeToReset = timeToReset;
+    }
+
+    public int getAmountOfTimeToReset() {
+        return amountOfTimeToReset;
     }
 
     public ItemDTO getRequestedItemDTO() {

@@ -23,8 +23,6 @@ import com.exam.ingsw.dietideals24.repository.IAuctionRepository;
     - It is used to check the expired silent auctions once when the application is started and every midnight and update them if necessary.
 **/
 
-// TODO: CREARE UN MECCANISMO SIMILE PER LE ASTE ALL'INGLESE
-
 @Service
 public class AuctionSchedulerService {
     @Autowired
@@ -36,7 +34,7 @@ public class AuctionSchedulerService {
 
     private final List<String> pendingNotifications = new ArrayList<>();
     @Autowired
-    private SilentAuctionNotificationService notificationService;
+    private AuctionNotificationService notificationService;
 
     @PostConstruct
     public void checkForExpiredSilentAuctionsOnStartUp() {
@@ -48,10 +46,11 @@ public class AuctionSchedulerService {
         - Execute every day at midnight
         - Execute once ended a silent auction
     **/
+
+    // TODO: (SILENT AUCTION) FOR NOW THIS FUNCTIONS NOTIFIES ONLY WINNERS
     @Scheduled(cron = "0 0 0 * * ?")
     public void checkForExpiredSilentAuctions() {
-        List<Auction> expiredSilentAuctions = auctionRepository.findByAuctionTypeAndActiveIsTrueAndExpirationDateBefore(
-                Type.SILENT, new Date(System.currentTimeMillis()));
+        List<Auction> expiredSilentAuctions = auctionRepository.findByAuctionTypeAndActiveIsTrueAndExpirationDateBefore(Type.SILENT, new Date(System.currentTimeMillis()));
 
         int count = 0;
         for (Auction auction : expiredSilentAuctions) {
@@ -69,6 +68,9 @@ public class AuctionSchedulerService {
             }
         }
     }
+
+    // TODO: (ENGLISH AUCTION) FOR NOW THIS FUNCTIONS NOTIFIES ONLY WINNERS
+
 
     public void notifyExpiredAuctionForUser(Integer auctionId, Integer userId) {
         // Retrieve Data

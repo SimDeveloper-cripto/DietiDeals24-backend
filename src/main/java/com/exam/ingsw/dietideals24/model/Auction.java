@@ -2,11 +2,11 @@ package com.exam.ingsw.dietideals24.model;
 
 import java.util.Set;
 import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import com.exam.ingsw.dietideals24.enums.Type;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "auctions")
@@ -28,7 +28,10 @@ public class Auction {
     private Date expirationDate;
 
     @Column
-    private Time expirationTime;
+    private LocalDateTime expirationTime;
+
+    @Column
+    private int amountOfTimeToReset; // Specifies seconds
 
     @Column
     private boolean active;
@@ -90,12 +93,20 @@ public class Auction {
         this.expirationDate = expirationDate;
     }
 
-    public Time getExpirationTime() {
+    public LocalDateTime getExpirationTime() {
         return expirationTime;
     }
 
-    public void setExpirationTime(Time expirationTime) {
+    public void setExpirationTime(LocalDateTime expirationTime) {
         this.expirationTime = expirationTime;
+    }
+
+    public void setAmountOfTimeToReset(int timeToReset) {
+        this.amountOfTimeToReset = timeToReset;
+    }
+
+    public int getAmountOfTimeToReset() {
+        return amountOfTimeToReset;
     }
 
     public boolean isActive() {
