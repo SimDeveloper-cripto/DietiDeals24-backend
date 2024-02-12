@@ -85,8 +85,13 @@ public class AuctionSchedulerService {
         User winner     = userRepository.findById(userId).get();
         Auction auction = auctionRepository.findById(auctionId).get();
 
-        String notificationMessage = "Congratulazioni " + winner.getName() + "! Hai vinto l'asta per " + auction.getItem().getName() + ".";
-        notificationService.addNotificationForUser(winner.getUserId(), notificationMessage);
+        String winnerNotificationMessage = "Congratulazioni " + winner.getName() + "! Hai vinto l'asta per " + auction.getItem().getName() + ".";
+        notificationService.addNotificationForUser(winner.getUserId(), winnerNotificationMessage);
+
+        User owner = userRepository.findById(auction.getOwnerId()).get();
+        String auctionerNofificationMessage = "Gentile " + owner.getName() + " " + owner.getSurname() +
+                    ", la informiamo che la sua asta per l'Item " + auction.getItem().getName() + " è terminata!";
+        notificationService.addNotificationForUser(owner.getUserId(), auctionerNofificationMessage);
     }
 
     private void addToNotificationList(Auction auction) {
