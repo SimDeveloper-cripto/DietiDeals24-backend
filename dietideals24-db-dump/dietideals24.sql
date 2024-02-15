@@ -8,6 +8,7 @@
         expiration_date date,
         item_id integer not null,
         owner_id integer not null,
+        winner_id integer,
         expiration_time datetime(6),
         primary key (auction_id)
     ) engine=InnoDB;

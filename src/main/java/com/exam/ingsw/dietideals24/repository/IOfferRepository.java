@@ -17,4 +17,7 @@ public interface IOfferRepository extends CrudRepository<Offer, Long> {
 
     @Query("SELECT o FROM Offer o WHERE o.auction.auctionId = :auctionId AND o.auction.item.itemId = :itemId")
     List<Offer> findOffers(Integer itemId, Integer auctionId);
+
+    @Query("SELECT o FROM Offer o WHERE o.user.userId <> o.auction.winnerId")
+    List<Offer> findOffersWhereUserIdIsNotWinner();
 }

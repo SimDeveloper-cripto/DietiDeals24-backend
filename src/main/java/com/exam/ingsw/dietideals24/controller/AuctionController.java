@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import com.exam.ingsw.dietideals24.service.Interface.IAuctionService;
-import com.exam.ingsw.dietideals24.service.scheduler.AuctionSchedulerService;
+import com.exam.ingsw.dietideals24.service.scheduler.SilentAuctionSchedulerService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,9 +32,8 @@ public class AuctionController {
     @Autowired
     @Qualifier("AuctionService")
     private IAuctionService auctionService;
-
     @Autowired
-    private AuctionSchedulerService auctionSchedulerService;
+    private SilentAuctionSchedulerService auctionSchedulerService;
 
     @PostMapping("/auction/addAuction")
     public ResponseEntity<Void> createAuction(
@@ -113,11 +112,12 @@ public class AuctionController {
         if (auctionId == null || userId == null) throw new EmptyParametersException("endAuction: at least one parameter is NULL!");
         else {
             auctionService.closeAuction(auctionId);
-            auctionSchedulerService.notifyExpiredAuctionForUser(auctionId, userId);
+            auctionSchedulerService.notifyExpiredSilentAuctionForUser(auctionId, userId);
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
 
+    /* ENGLISH AUCTION RELATED METHOD */
     @GetMapping("/auction/getRemainingTime")
     public ResponseEntity<?> getTimeRemaining(
             @RequestParam Integer auctionId,

@@ -18,6 +18,9 @@ public class Auction {
     @Column(nullable = false)
     private int ownerId;
 
+    @Column
+    private Integer winnerId;
+
     @Column(nullable = false)
     private Type auctionType;
 
@@ -63,6 +66,14 @@ public class Auction {
 
     public void setAuctionId(Integer auctionId) {
         this.auctionId = auctionId;
+    }
+
+    public Integer getWinnerId() {
+        return winnerId;
+    }
+
+    public void setWinnerId(Integer winnerId) {
+        this.winnerId = winnerId;
     }
 
     public int getOwnerId() { return ownerId; }
