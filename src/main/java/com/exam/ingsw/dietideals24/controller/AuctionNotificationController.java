@@ -30,9 +30,9 @@ public class AuctionNotificationController {
     }
 
     @GetMapping("/auction/silent/getOfferList/pending")
-    public ResponseEntity<List<OfferDTO>> sendPendingOffersSilentAuction(@RequestParam Integer userId) {
-        List<OfferDTO> offerDTOS = notificationService.getSilentAuctionOffersNotificationsForUser(userId);
-        notificationService.clearSilentAuctionOffersNotificationsForUser(userId);
+    public ResponseEntity<List<OfferDTO>> sendPendingOffersSilentAuction(@RequestParam Integer itemId) {
+        List<OfferDTO> offerDTOS = notificationService.getOfferMap(itemId);
+        notificationService.clearOfferMap(itemId);
 
         if (offerDTOS.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

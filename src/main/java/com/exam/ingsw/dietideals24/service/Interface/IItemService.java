@@ -19,4 +19,6 @@ public interface IItemService {
     List<ItemDTO> findItemsWantedByUser(Integer userId, String email, String password);
 
     byte[] findItemImageContent(Integer itemId, String name);
+
+    List<ItemDTO> findItemsWithNoWinner(Integer userId);
 }

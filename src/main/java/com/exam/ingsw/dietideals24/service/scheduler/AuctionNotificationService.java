@@ -8,7 +8,7 @@ import com.exam.ingsw.dietideals24.model.helper.OfferDTO;
 @Service
 public class AuctionNotificationService {
     private final Map<Integer, List<String>> userSilentAuctionNotifications = new ConcurrentHashMap<>();
-    private final Map<Integer, List<OfferDTO>> userSilentAuctionOffersNotifications = new ConcurrentHashMap<>();
+    private final Map<Integer, List<OfferDTO>> silentAuctionOffers = new ConcurrentHashMap<>(); // Indexed for ItemID: <itemId, list of offers>
 
     /* SILENT AUCTION */
     public void addSilentAuctionNotificationForUser(Integer userId, String notification) {
@@ -23,16 +23,16 @@ public class AuctionNotificationService {
         userSilentAuctionNotifications.remove(userId);
     }
 
-    public void addSilentAuctionOfferForUser(Integer userId, OfferDTO offer) {
-        userSilentAuctionOffersNotifications.computeIfAbsent(userId, k -> new ArrayList<>()).add(offer);
+    public void addOfferToMap(Integer itemId, OfferDTO offer) {
+        silentAuctionOffers.computeIfAbsent(itemId, k -> new ArrayList<>()).add(offer);
     }
 
-    public List<OfferDTO> getSilentAuctionOffersNotificationsForUser(Integer userId) {
-        return userSilentAuctionOffersNotifications.getOrDefault(userId, Collections.emptyList());
+    public List<OfferDTO> getOfferMap(Integer itemId) {
+        return silentAuctionOffers.getOrDefault(itemId, Collections.emptyList());
     }
 
-    public void clearSilentAuctionOffersNotificationsForUser(Integer userId) {
-        userSilentAuctionOffersNotifications.remove(userId);
+    public void clearOfferMap(Integer itemId) {
+        silentAuctionOffers.remove(itemId);
     }
 
     /* ENGLISH AUCTION */

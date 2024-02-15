@@ -86,7 +86,7 @@ public class ItemController {
     }
 
     @GetMapping("/item/findItemsWantedByUser")
-    public ResponseEntity<List<ItemDTO>> findItemsForUser( // I don't want to make the name too long
+    public ResponseEntity<List<ItemDTO>> findItemsForUser(
             @RequestParam Integer userId,
             @RequestParam String email,
             @RequestParam String password) throws EmptyParametersException {
@@ -94,6 +94,15 @@ public class ItemController {
             throw new EmptyParametersException("At least one of the parameters provided is NULL or empty string!");
         } else {
             List<ItemDTO> items = itemService.findItemsWantedByUser(userId, email, password);
+            return ResponseEntity.ok(items);
+        }
+    }
+
+    @GetMapping("/item/findItemsWithNoWinner")
+    public ResponseEntity<List<ItemDTO>> findItemsWithNoWinner(@RequestParam Integer userId) throws EmptyParametersException {
+        if (userId == null) throw new EmptyParametersException("UserID provided is NULL");
+        else {
+            List<ItemDTO> items = itemService.findItemsWithNoWinner(userId);
             return ResponseEntity.ok(items);
         }
     }

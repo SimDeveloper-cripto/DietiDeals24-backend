@@ -4,10 +4,10 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
-import com.exam.ingsw.dietideals24.model.helper.OfferDTO;
 import jakarta.annotation.PostConstruct;
 import com.exam.ingsw.dietideals24.model.User;
 import com.exam.ingsw.dietideals24.model.Offer;
+import com.exam.ingsw.dietideals24.model.helper.OfferDTO;
 import com.exam.ingsw.dietideals24.repository.IUserRepository;
 import com.exam.ingsw.dietideals24.repository.IOfferRepository;
 
@@ -48,8 +48,9 @@ public class SilentAuctionSchedulerService {
         List<Auction> expiredSilentAuctions = auctionRepository.findByAuctionTypeAndActiveIsTrueAndExpirationDateBefore(Type.SILENT, new Date(System.currentTimeMillis()));
 
         for (Auction auction : expiredSilentAuctions) {
-            User owner = userRepository.findById(auction.getOwnerId()).get();
-            Integer ownerId = owner.getUserId();
+            User owner        = userRepository.findById(auction.getOwnerId()).get();
+            Integer ownerId   = owner.getUserId();
+            Integer auctionId = auction.getAuctionId();
 
             auction.updateStatusForSilentAuction();
             auctionRepository.save(auction);
@@ -59,16 +60,17 @@ public class SilentAuctionSchedulerService {
             if (retrievedOffer.isPresent()) {
                 List<Offer> offers = offerRepository.findOffers(auction.getItem().getItemId(), auction.getAuctionId());
 
-                // Notification for Auction owner
+                // For each Auction, we store the list of offers
                 for (Offer o : offers) {
                     OfferDTO offerDTO = new OfferDTO();
                     offerDTO.setOfferId(o.getOfferId());
                     offerDTO.setUser(o.getUser());
                     offerDTO.setOffer(o.getOffer());
+                    offerDTO.setAuctionId(auctionId);
                     offerDTO.setAuctionType(o.getAuction().getAuctionType());
 
                     // Date and Time are not relevant to set in this case
-                    notificationService.addSilentAuctionOfferForUser(ownerId, offerDTO);
+                    notificationService.addOfferToMap(auction.getItem().getItemId(), offerDTO);
                 }
 
                 // Notifications for each User
@@ -78,6 +80,10 @@ public class SilentAuctionSchedulerService {
                             ", la informiamo che la sua asta per l'Item " + auction.getItem().getName() + " è terminata!";
                     notificationService.addSilentAuctionNotificationForUser(user.getUserId(), message);
                 }
+
+                String warningMessage = "Gentile " + owner.getName() + " " + owner.getSurname() +
+                        ", la informiamo che deve scegliere un vincitore per l'Item " + auction.getItem().getName();
+                notificationService.addSilentAuctionNotificationForUser(ownerId, warningMessage);
             } else {
                 String auctionerNofificationMessage = "Gentile " + owner.getName() + " " + owner.getSurname() +
                         ", la informiamo che la sua asta per l'Item " + auction.getItem().getName() + " è terminata senza offerte!";

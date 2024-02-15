@@ -51,6 +51,15 @@ public class ItemService implements IItemService {
         return itemRepository.findImageByIdAndName(itemID, name);
     }
 
+    @Override
+    public List<ItemDTO> findItemsWithNoWinner(Integer userId) {
+        // Return the list of Items auctioned by that userId with those specifications:
+            // Auction must be active = false and winnerId = null
+            // There must be at least one offer for that Item
+        List<Object[]> result = itemRepository.findItemsWithNoWinner(userId);
+        return createItemList(result);
+    }
+
     private List<ItemDTO> createItemList(List<Object[]> result) {
         List<ItemDTO> items = new ArrayList<>();
         for (Object[] obs : result) {

@@ -75,4 +75,13 @@ public interface IItemRepository extends CrudRepository<Item, Integer> {
     byte[] findImageByIdAndName(
              @Param("itemId") Integer itemId,
              @Param("name") String name);
+
+    @Query("SELECT i.itemId, i.name, i.description, i.category, i.basePrize, i.user " +
+            "FROM Item i JOIN i.auction a JOIN a.offers o " +
+            "WHERE i.user.userId = :userId " +
+            "AND a.winnerId IS NULL " +
+            "AND a.auctionType = 'SILENT' " + // SILENT Auction
+            "GROUP BY i.itemId " +
+            "HAVING COUNT(o) > 0")
+    List<Object[]> findItemsWithNoWinner(@Param("userId") Integer userId);
 }
