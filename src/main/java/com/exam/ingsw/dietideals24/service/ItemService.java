@@ -3,6 +3,7 @@ package com.exam.ingsw.dietideals24.service;
 import java.util.List;
 import java.util.ArrayList;
 
+import com.exam.ingsw.dietideals24.enums.Type;
 import com.exam.ingsw.dietideals24.model.User;
 import org.springframework.stereotype.Service;
 import com.exam.ingsw.dietideals24.model.Item;
@@ -56,7 +57,7 @@ public class ItemService implements IItemService {
         // Return the list of Items auctioned by that userId with those specifications:
             // Auction must be active = false and winnerId = null
             // There must be at least one offer for that Item
-        List<Object[]> result = itemRepository.findItemsWithNoWinner(userId);
+        List<Object[]> result = itemRepository.findItemsWithNoWinner(userId, Type.SILENT);
         return createItemList(result);
     }
 

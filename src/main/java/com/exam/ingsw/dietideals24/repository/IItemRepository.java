@@ -1,6 +1,7 @@
 package com.exam.ingsw.dietideals24.repository;
 
 import java.util.List;
+import com.exam.ingsw.dietideals24.enums.Type;
 import com.exam.ingsw.dietideals24.model.Item;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.Query;
@@ -79,9 +80,9 @@ public interface IItemRepository extends CrudRepository<Item, Integer> {
     @Query("SELECT i.itemId, i.name, i.description, i.category, i.basePrize, i.user " +
             "FROM Item i JOIN i.auction a JOIN a.offers o " +
             "WHERE i.user.userId = :userId " +
-            "AND a.winnerId IS NULL " +
-            "AND a.auctionType = 'SILENT' " + // SILENT Auction
+            "AND a.winnerId IS NULL AND a.active = false " +
+            "AND a.auctionType = :auctionType " + // SILENT Auction
             "GROUP BY i.itemId " +
             "HAVING COUNT(o) > 0")
-    List<Object[]> findItemsWithNoWinner(@Param("userId") Integer userId);
+    List<Object[]> findItemsWithNoWinner(@Param("userId") Integer userId, @Param("auctionType") Type auctionType);
 }
