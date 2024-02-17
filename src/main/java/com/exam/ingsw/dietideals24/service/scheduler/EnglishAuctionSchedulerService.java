@@ -56,8 +56,11 @@ public class EnglishAuctionSchedulerService {
             Offer offer = retrievedOffer.get();
             User winner = offer.getUser();
 
-            // Save the winner information
+            // Save:
+            // 1. Winner Information
+            // 2. Winning bid Information
             auction.setWinnerId(winner.getUserId());
+            auction.setWinningBid(offer.getOffer());
             auctionRepository.save(auction);
 
             String notificationMessage = "Congratulazioni " + offer.getUser().getName() + "! Hai vinto l'asta per " + auction.getItem().getName() + ".";

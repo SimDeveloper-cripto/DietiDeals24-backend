@@ -73,6 +73,7 @@ public class ItemController {
         }
     }
 
+    /* [ITEMS AUCTIONED BY THE USER SECTION] */
     @GetMapping("/item/findAuctionedByUser")
     public ResponseEntity<List<ItemDTO>> findItemsCreatedByUser(
             @RequestParam Integer userId,
@@ -85,6 +86,7 @@ public class ItemController {
         }
     }
 
+    /* [ITEMS WANTED BY THE USER SECTION] */
     @GetMapping("/item/findItemsWantedByUser")
     public ResponseEntity<List<ItemDTO>> findItemsForUser(
             @RequestParam Integer userId,
@@ -98,11 +100,22 @@ public class ItemController {
         }
     }
 
+    /* [ITEMS WITH NO WINNER ASSOCIATED SECTION] */
     @GetMapping("/item/findItemsWithNoWinner")
     public ResponseEntity<List<ItemDTO>> findItemsWithNoWinner(@RequestParam Integer userId) throws EmptyParametersException {
         if (userId == null) throw new EmptyParametersException("UserID provided is NULL");
         else {
             List<ItemDTO> items = itemService.findItemsWithNoWinner(userId);
+            return ResponseEntity.ok(items);
+        }
+    }
+
+    /* [ITEMS WITH NO WINNER ASSOCIATED SECTION] */
+    @GetMapping("/item/findItemsWonByUser")
+    public ResponseEntity<List<ItemDTO>> findItemsWonByUser(@RequestParam Integer userId) throws EmptyParametersException {
+        if (userId == null) throw new EmptyParametersException("UserID provided is NULL");
+        else {
+            List<ItemDTO> items = itemService.findItemsWonByUser(userId);
             return ResponseEntity.ok(items);
         }
     }

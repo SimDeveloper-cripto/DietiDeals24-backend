@@ -85,4 +85,8 @@ public interface IItemRepository extends CrudRepository<Item, Integer> {
             "GROUP BY i.itemId " +
             "HAVING COUNT(o) > 0")
     List<Object[]> findItemsWithNoWinner(@Param("userId") Integer userId, @Param("auctionType") Type auctionType);
+
+    @Query("SELECT i.itemId, i.name, i.description, i.category, i.basePrize, i.user FROM Item i " +
+            "JOIN i.auction a WHERE a.winnerId = :userId AND a.active = false")
+    List<Object[]> findItemsWonByUser(@Param("userId") Integer userId);
 }

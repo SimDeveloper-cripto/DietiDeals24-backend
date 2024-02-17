@@ -21,4 +21,6 @@ public interface IItemService {
     byte[] findItemImageContent(Integer itemId, String name);
 
     List<ItemDTO> findItemsWithNoWinner(Integer userId);
+
+    List<ItemDTO> findItemsWonByUser(Integer userId);
 }

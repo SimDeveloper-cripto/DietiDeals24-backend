@@ -108,11 +108,12 @@ public class AuctionController {
     @PostMapping("/auction/endAuction")
     public ResponseEntity<Void> endAuction(
             @RequestParam Integer auctionId,
-            @RequestParam Integer userId) throws EmptyParametersException {
-        if (auctionId == null || userId == null) throw new EmptyParametersException("endAuction: at least one parameter is NULL!");
+            @RequestParam Integer userId,
+            @RequestParam Float winningBid) throws EmptyParametersException {
+        if (auctionId == null || userId == null || winningBid == null) throw new EmptyParametersException("endAuction: at least one parameter is NULL!");
         else {
             auctionService.closeAuction(auctionId);
-            auctionSchedulerService.notifyExpiredSilentAuctionForUser(auctionId, userId);
+            auctionSchedulerService.notifyExpiredSilentAuctionForUser(auctionId, userId, winningBid);
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
@@ -122,7 +123,7 @@ public class AuctionController {
     public ResponseEntity<?> getTimeRemaining(
             @RequestParam Integer auctionId,
             @RequestParam Integer userId) throws EmptyParametersException {
-        if (auctionId == null || userId == null) throw new EmptyParametersException("endAuction: at least one parameter is NULL!");
+        if (auctionId == null || userId == null) throw new EmptyParametersException("getRemainingTime: at least one parameter is NULL!");
         else {
             try {
                 AuctionStatusDTO auctionStatusDTO = auctionService.getTimeRemaining(auctionId, userId);

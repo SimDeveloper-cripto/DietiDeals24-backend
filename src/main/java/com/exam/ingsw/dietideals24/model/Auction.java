@@ -28,6 +28,9 @@ public class Auction {
     private float currentOfferValue;
 
     @Column
+    private float winningBid;
+
+    @Column
     private Date expirationDate;
 
     @Column
@@ -126,6 +129,14 @@ public class Auction {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public float getWinningBid() {
+        return winningBid;
+    }
+
+    public void setWinningBid(float winningBid) {
+        this.winningBid = winningBid;
     }
 
     public Item getItem() {

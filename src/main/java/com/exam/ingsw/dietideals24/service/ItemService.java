@@ -54,10 +54,16 @@ public class ItemService implements IItemService {
 
     @Override
     public List<ItemDTO> findItemsWithNoWinner(Integer userId) {
-        // Return the list of Items auctioned by that userId with those specifications:
-            // Auction must be active = false and winnerId = null
-            // There must be at least one offer for that Item
+        // Return the list of Items auctioned by that userId with those specifications.
+            // 1. Auction must be (active = false) and (winnerId = null)
+            // 2. There must be at least one offer for that Item
         List<Object[]> result = itemRepository.findItemsWithNoWinner(userId, Type.SILENT);
+        return createItemList(result);
+    }
+
+    @Override
+    public List<ItemDTO> findItemsWonByUser(Integer userId) {
+        List<Object[]> result = itemRepository.findItemsWonByUser(userId);
         return createItemList(result);
     }
 

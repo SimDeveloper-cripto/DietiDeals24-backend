@@ -9,6 +9,7 @@
         item_id integer not null,
         owner_id integer not null,
         winner_id integer,
+        winning_bid float(23),
         expiration_time datetime(6),
         primary key (auction_id)
     ) engine=InnoDB;

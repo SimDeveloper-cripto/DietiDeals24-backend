@@ -92,12 +92,15 @@ public class SilentAuctionSchedulerService {
         }
     }
 
-    public void notifyExpiredSilentAuctionForUser(Integer auctionId, Integer userId) {
+    public void notifyExpiredSilentAuctionForUser(Integer auctionId, Integer userId, Float winningBid) {
         User winner     = userRepository.findById(userId).get();
         Auction auction = auctionRepository.findById(auctionId).get();
 
-        // Save winner information
+        // Save:
+        // 1. Winner Information
+        // 2. Winning bid Information
         auction.setWinnerId(winner.getUserId());
+        auction.setWinningBid(winningBid);
         auctionRepository.save(auction);
 
         String winnerNotificationMessage = "Congratulazioni " + winner.getName() + "! Hai vinto l'asta per " + auction.getItem().getName() + ".";
