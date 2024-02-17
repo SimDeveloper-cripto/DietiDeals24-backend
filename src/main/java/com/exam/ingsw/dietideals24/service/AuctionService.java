@@ -56,4 +56,9 @@ public class AuctionService implements IAuctionService {
             return new AuctionStatusDTO(true,"Auction is still active!", secondsRemaining);
         }
     }
+
+    @Override
+    public Float getWinningBid(Integer itemId) {
+        return auctionRepository.findWinningBidByItemId(itemId);
+    }
 }

@@ -34,4 +34,7 @@ public interface IAuctionRepository extends CrudRepository<Auction, Integer> {
     @Transactional
     @Query("UPDATE Auction a SET a.active = false WHERE a.auctionId = :auctionId")
     void closeAuction(@Param("auctionId") Integer auctionId);
+
+    @Query("SELECT a.winningBid FROM Auction a WHERE a.item.itemId = :itemId")
+    Float findWinningBidByItemId(@Param("itemId") Integer itemId);
 }

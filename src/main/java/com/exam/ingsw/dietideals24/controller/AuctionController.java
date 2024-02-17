@@ -136,6 +136,18 @@ public class AuctionController {
         }
     }
 
+    /* [DESCRIPTION]
+        - This end-point is requested once the auction has ended. There in no point in worrying about auctionService to return a null value.
+    **/
+    @GetMapping("/auction/getWinningBid")
+    public ResponseEntity<Float> getWinningBid(@RequestParam Integer itemId) throws EmptyParametersException {
+        if (itemId == null) throw new EmptyParametersException("getWinningBid: ItemID received is NULL!");
+        else {
+            Float winningBid = auctionService.getWinningBid(itemId);
+            return ResponseEntity.ok(winningBid);
+        }
+    }
+
     private static Auction getAuction(AuctionDTO requestedAuction, Item item, Date sqlDate, LocalDateTime sqlTime) {
         Auction auction = new Auction();
         auction.setItem(item);
