@@ -2,6 +2,7 @@ package com.exam.ingsw.dietideals24.service;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import com.exam.ingsw.dietideals24.enums.Type;
 import com.exam.ingsw.dietideals24.model.User;
@@ -24,7 +25,9 @@ public class ItemService implements IItemService {
     }
 
     @Override
-    public List<ItemDTO> findItemsUpForFeaturedAuctionBySearchTermAndCategory(String searchTerm, List<String> categories, Integer userId) {
+    public List<ItemDTO> findItemsUpForFeaturedAuctionBySearchTermAndCategory(String searchTerm, List<String> categories, int userId) {
+        if (userId <= 0) return Collections.emptyList();
+
         List<Object[]> result = itemRepository.findFeaturedItemsBySearchTermAndCategory(searchTerm, categories, userId);
         return createItemList(result);
     }

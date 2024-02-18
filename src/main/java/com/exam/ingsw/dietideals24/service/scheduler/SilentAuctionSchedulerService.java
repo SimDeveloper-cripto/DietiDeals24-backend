@@ -110,5 +110,7 @@ public class SilentAuctionSchedulerService {
         String auctionerNofificationMessage = "Gentile " + owner.getName() + " " + owner.getSurname() +
                     ", la informiamo che la sua asta per l'Item " + auction.getItem().getName() + " è terminata con successo!";
         notificationService.addSilentAuctionNotificationForUser(owner.getUserId(), auctionerNofificationMessage);
+
+        notificationService.clearOfferMap(auction.getItem().getItemId());
     }
 }

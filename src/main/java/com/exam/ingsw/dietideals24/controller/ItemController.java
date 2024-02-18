@@ -65,8 +65,8 @@ public class ItemController {
             @RequestParam String email) throws EmptyParametersException {
         if (email.isBlank() || email.isEmpty())
             throw new EmptyParametersException("ItemController [searchFeaturedItems()] --> Null credentials!");
-        else if (userId == null)
-            throw new EmptyParametersException("User's ID cannot be null!");
+        else if (userId == null || userId <= 0)
+            throw new EmptyParametersException("User's ID value is not acceptable! Value: " + userId);
         else {
             List<ItemDTO> items = itemService.findItemsUpForFeaturedAuction(userId, email);
             return ResponseEntity.ok(items);

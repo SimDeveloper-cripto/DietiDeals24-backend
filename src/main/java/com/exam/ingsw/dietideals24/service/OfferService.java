@@ -20,7 +20,6 @@ import com.exam.ingsw.dietideals24.service.Interface.IOfferService;
 public class OfferService implements IOfferService {
     @Autowired
     private IOfferRepository offerRepository;
-
     @Autowired
     private IAuctionRepository auctionRepository;
 
@@ -64,7 +63,7 @@ public class OfferService implements IOfferService {
     }
 
     @Override
-    public List<OfferDTO> getOffers(Integer itemId, Integer auctionId) {
+    public List<OfferDTO> getOffers(int itemId, int auctionId) {
         List<Offer> offers = offerRepository.findOffers(itemId, auctionId);
 
         if (offers.isEmpty()) return null;

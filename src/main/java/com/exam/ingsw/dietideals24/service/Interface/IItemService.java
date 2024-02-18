@@ -8,7 +8,7 @@ public interface IItemService {
     Integer createItem(Item item);
 
     /* [FEATURED ITEMS UP FOR AUCTION SECTION] */
-    List<ItemDTO> findItemsUpForFeaturedAuctionBySearchTermAndCategory(String searchTerm, List<String> selectedCategories, Integer userId);
+    List<ItemDTO> findItemsUpForFeaturedAuctionBySearchTermAndCategory(String searchTerm, List<String> selectedCategories, int userId);
 
     List<ItemDTO> findItemsUpForFeaturedAuction(Integer userId, String email);
 

@@ -8,12 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.repository.CrudRepository;
 
-/* TODO
-    - RECUPERARE LE ASTE IN EVIDENZA SECONDO I SEGUENTI CRITERI (SCEGLIERNE UNO DEI DUE)
-        1. RECUPERARE LE ASTE ORDINANDOLE PER NUMERO DI PARTECIPANTI
-        2. RECUPERARE LE ASTE ORDINANDOLE PER I VALORE DI OFFERTA PIU' ALTO
-**/
-
 @Repository
 public interface IItemRepository extends CrudRepository<Item, Integer> {
     /* [FEATURED ITEMS UP FOR AUCTION]
@@ -35,6 +29,11 @@ public interface IItemRepository extends CrudRepository<Item, Integer> {
             @Param("categories") List<String> categories,
             @Param("userId") Integer userId); // Given: searchTerm, categories, userId
 
+    /* [THE QUERY IS PREPARED FOR FUTURE UPDATES]
+        - RECOVER THE FEATURED AUCTIONS ACCORDING TO THE FOLLOWING CRITERIA (CHOOSE ONE OF THE TWO)
+            1. RECOVER THE AUCTIONS ORDERING THEM BY NUMBER OF PARTICIPANTS
+            2. RECOVER THE AUCTIONS BY ORDERING THEM BY THE HIGHEST BID VALUE
+    **/
     @Query("SELECT DISTINCT i.itemId, i.name, i.description, i.category, i.basePrize, i.user FROM Item i " +
             "LEFT JOIN i.auction a " +
             "LEFT JOIN a.offers o " +

@@ -10,5 +10,5 @@ public interface IOfferService {
     void createOffer(OfferDTO offerDTO);
 
     /* Needed for Silent Auctions */
-    List<OfferDTO> getOffers(Integer itemId, Integer auctionId);
+    List<OfferDTO> getOffers(int itemId, int auctionId);
 }
