@@ -1,6 +1,6 @@
 package com.exam.ingsw.dietideals24.service.Interface;
 
-import com.exam.ingsw.dietideals24.model.helper.UserDTO;
+import com.exam.ingsw.dietideals24.model.dto.UserDTO;
 
 public interface IUserService {
     UserDTO registerUser(UserDTO userDTO);

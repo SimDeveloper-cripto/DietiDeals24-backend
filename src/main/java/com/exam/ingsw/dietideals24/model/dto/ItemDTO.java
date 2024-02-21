@@ -1,4 +1,4 @@
-package com.exam.ingsw.dietideals24.model.helper;
+package com.exam.ingsw.dietideals24.model.dto;
 
 import java.io.Serializable;
 import com.exam.ingsw.dietideals24.model.User;

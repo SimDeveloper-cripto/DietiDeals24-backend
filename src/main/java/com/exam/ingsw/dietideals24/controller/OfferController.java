@@ -3,7 +3,7 @@ package com.exam.ingsw.dietideals24.controller;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.exam.ingsw.dietideals24.model.helper.OfferDTO;
+import com.exam.ingsw.dietideals24.model.dto.OfferDTO;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.exam.ingsw.dietideals24.service.Interface.IOfferService;

@@ -3,7 +3,7 @@ package com.exam.ingsw.dietideals24.service.scheduler;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.stereotype.Service;
-import com.exam.ingsw.dietideals24.model.helper.OfferDTO;
+import com.exam.ingsw.dietideals24.model.dto.OfferDTO;
 
 @Service
 public class AuctionNotificationService {

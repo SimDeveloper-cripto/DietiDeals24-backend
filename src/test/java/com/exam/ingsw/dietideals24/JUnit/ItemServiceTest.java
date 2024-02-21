@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import com.exam.ingsw.dietideals24.model.User;
 import com.exam.ingsw.dietideals24.service.ItemService;
-import com.exam.ingsw.dietideals24.model.helper.ItemDTO;
+import com.exam.ingsw.dietideals24.model.dto.ItemDTO;
 import com.exam.ingsw.dietideals24.repository.IItemRepository;
 
 import org.mockito.Mock;

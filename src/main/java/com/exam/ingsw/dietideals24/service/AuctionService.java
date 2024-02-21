@@ -11,7 +11,7 @@ import com.exam.ingsw.dietideals24.exception.AuctionNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import com.exam.ingsw.dietideals24.repository.IAuctionRepository;
-import com.exam.ingsw.dietideals24.model.helper.AuctionStatusDTO;
+import com.exam.ingsw.dietideals24.model.dto.AuctionStatusDTO;
 import com.exam.ingsw.dietideals24.service.Interface.IAuctionService;
 
 @Service("AuctionService")

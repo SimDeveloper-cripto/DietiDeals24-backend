@@ -8,9 +8,9 @@ import java.time.format.DateTimeFormatter;
 import com.exam.ingsw.dietideals24.enums.Type;
 import com.exam.ingsw.dietideals24.model.Item;
 import com.exam.ingsw.dietideals24.model.Auction;
-import com.exam.ingsw.dietideals24.model.helper.ItemDTO;
-import com.exam.ingsw.dietideals24.model.helper.AuctionDTO;
-import com.exam.ingsw.dietideals24.model.helper.AuctionStatusDTO;
+import com.exam.ingsw.dietideals24.model.dto.ItemDTO;
+import com.exam.ingsw.dietideals24.model.dto.AuctionDTO;
+import com.exam.ingsw.dietideals24.model.dto.AuctionStatusDTO;
 import com.exam.ingsw.dietideals24.exception.EmptyParametersException;
 import com.exam.ingsw.dietideals24.exception.ErrorWhenParsingException;
 

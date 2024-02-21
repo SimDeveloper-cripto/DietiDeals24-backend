@@ -2,7 +2,7 @@ package com.exam.ingsw.dietideals24.service.Interface;
 
 import java.util.Optional;
 import com.exam.ingsw.dietideals24.model.Auction;
-import com.exam.ingsw.dietideals24.model.helper.AuctionStatusDTO;
+import com.exam.ingsw.dietideals24.model.dto.AuctionStatusDTO;
 import com.exam.ingsw.dietideals24.exception.AuctionExpiredException;
 import com.exam.ingsw.dietideals24.exception.AuctionNotFoundException;
 

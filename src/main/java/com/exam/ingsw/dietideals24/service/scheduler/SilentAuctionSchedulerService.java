@@ -7,7 +7,7 @@ import java.util.Optional;
 import jakarta.annotation.PostConstruct;
 import com.exam.ingsw.dietideals24.model.User;
 import com.exam.ingsw.dietideals24.model.Offer;
-import com.exam.ingsw.dietideals24.model.helper.OfferDTO;
+import com.exam.ingsw.dietideals24.model.dto.OfferDTO;
 import com.exam.ingsw.dietideals24.repository.IUserRepository;
 import com.exam.ingsw.dietideals24.repository.IOfferRepository;
 

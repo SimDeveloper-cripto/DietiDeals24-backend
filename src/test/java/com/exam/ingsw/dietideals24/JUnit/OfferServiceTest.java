@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import com.exam.ingsw.dietideals24.model.Offer;
 import com.exam.ingsw.dietideals24.model.Auction;
 import com.exam.ingsw.dietideals24.service.OfferService;
-import com.exam.ingsw.dietideals24.model.helper.OfferDTO;
+import com.exam.ingsw.dietideals24.model.dto.OfferDTO;
 import com.exam.ingsw.dietideals24.repository.IOfferRepository;
 
 import static org.mockito.Mockito.when;

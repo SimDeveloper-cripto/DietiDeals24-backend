@@ -3,12 +3,13 @@ package com.exam.ingsw.dietideals24.service;
 import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import com.exam.ingsw.dietideals24.enums.Type;
 import org.springframework.stereotype.Service;
 import com.exam.ingsw.dietideals24.model.Offer;
 import com.exam.ingsw.dietideals24.model.Auction;
-import com.exam.ingsw.dietideals24.model.helper.OfferDTO;
+import com.exam.ingsw.dietideals24.model.dto.OfferDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.exam.ingsw.dietideals24.utility.MySQLDateAndTimeParser;
 
@@ -48,7 +49,9 @@ public class OfferService implements IOfferService {
         Auction auction = auctionRepository.findById(offerDTO.getAuctionId()).get();
         if (offerDTO.getAuctionType().equals(Type.ENGLISH)) {
             // Update "expirationTime" attribute of the Auction record
-            LocalDateTime newExpirationTime = auction.getExpirationTime().plusHours(auction.getAmountOfTimeToReset());
+            LocalDateTime now               = LocalDateTime.now();
+            LocalDateTime newExpirationTime = now.plusHours(auction.getAmountOfTimeToReset());
+            newExpirationTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
             auction.setExpirationTime(newExpirationTime);
             auctionRepository.save(auction);
         }

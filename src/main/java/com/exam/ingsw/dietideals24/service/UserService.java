@@ -3,7 +3,7 @@ package com.exam.ingsw.dietideals24.service;
 import java.util.Optional;
 import com.exam.ingsw.dietideals24.model.User;
 import org.springframework.stereotype.Service;
-import com.exam.ingsw.dietideals24.model.helper.UserDTO;
+import com.exam.ingsw.dietideals24.model.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.exam.ingsw.dietideals24.repository.IUserRepository;
 import com.exam.ingsw.dietideals24.service.Interface.IUserService;

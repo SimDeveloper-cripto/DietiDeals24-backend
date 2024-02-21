@@ -2,7 +2,7 @@ package com.exam.ingsw.dietideals24.service.Interface;
 
 import java.util.List;
 import com.exam.ingsw.dietideals24.model.Item;
-import com.exam.ingsw.dietideals24.model.helper.ItemDTO;
+import com.exam.ingsw.dietideals24.model.dto.ItemDTO;
 
 public interface IItemService {
     Integer createItem(Item item);

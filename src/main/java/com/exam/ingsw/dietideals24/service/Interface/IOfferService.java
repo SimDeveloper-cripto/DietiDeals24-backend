@@ -1,7 +1,7 @@
 package com.exam.ingsw.dietideals24.service.Interface;
 
 import java.util.List;
-import com.exam.ingsw.dietideals24.model.helper.OfferDTO;
+import com.exam.ingsw.dietideals24.model.dto.OfferDTO;
 
 public interface IOfferService {
     /* Needed for English Auctions */
