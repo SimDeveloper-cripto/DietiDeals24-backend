@@ -4,9 +4,6 @@ import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import com.exam.ingsw.dietideals24.enums.Type;
 import org.springframework.stereotype.Service;
 import com.exam.ingsw.dietideals24.model.Offer;
@@ -28,8 +25,8 @@ public class OfferService implements IOfferService {
 
     @Override
     public OfferDTO getTopOfferByItemIdAndAuctionId(Integer itemId, Integer auctionId) {
-        Page<Offer> pageOffer = offerRepository.findTopOfferByItemIdAndAuctionId(itemId, auctionId);
-        Offer offer = pageOffer.getContent().isEmpty() ? null : pageOffer.getContent().getFirst();
+        List<Offer> offers = offerRepository.findTopOfferByItemIdAndAuctionId(itemId, auctionId);
+        Offer offer = offers.isEmpty() ? null : offers.getFirst();
 
         if (offer != null) {
             OfferDTO offerDTO = new OfferDTO();
