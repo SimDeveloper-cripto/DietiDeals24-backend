@@ -39,7 +39,7 @@ public class AuctionController {
     public ResponseEntity<Void> createAuction(
             @RequestBody AuctionDTO requestedAuction) throws ErrorWhenParsingException {
         Integer itemId = requestedAuction.getRequestedItemId();
-        Item item = new Item();
+        Item item      = new Item();
         item.setItemId(itemId); // Needed by JPA to insert correctly the record (have a look at the relationships)
 
         java.sql.Date sqlDate = null;

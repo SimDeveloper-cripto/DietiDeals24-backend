@@ -37,7 +37,7 @@ public class Auction {
     private LocalDateTime expirationTime;
 
     @Column
-    private int amountOfTimeToReset; // Specifies seconds
+    private int amountOfTimeToReset; // Specifies Hours
 
     @Column
     private boolean active;
