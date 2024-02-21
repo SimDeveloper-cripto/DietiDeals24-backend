@@ -46,7 +46,6 @@ public class OfferServiceTest {
         offer3.setAuction(auction);
 
         when(offerRepository.findOffers(itemId, auctionId)).thenReturn(Arrays.asList(offer1, offer2, offer3));
-
         List<OfferDTO> offerDTOS = offerService.getOffers(itemId, auctionId);
         assertEquals(3, offerDTOS.size());
     }
@@ -56,8 +55,6 @@ public class OfferServiceTest {
         int itemId    = 0;
         int auctionId = 1;
 
-        when(offerRepository.findOffers(itemId, auctionId)).thenReturn(List.of());
-
         List<OfferDTO> offerDTOS = offerService.getOffers(itemId, auctionId);
         assertNull(offerDTOS);
     }
@@ -66,8 +63,6 @@ public class OfferServiceTest {
     public void testCaseCE1_CE4() {
         int itemId    = 1;
         int auctionId = -3;
-
-        when(offerRepository.findOffers(itemId, auctionId)).thenReturn(List.of());
 
         List<OfferDTO> offerDTOS = offerService.getOffers(itemId, auctionId);
         assertNull(offerDTOS);

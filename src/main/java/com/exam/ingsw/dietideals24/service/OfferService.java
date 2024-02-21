@@ -47,7 +47,7 @@ public class OfferService implements IOfferService {
         Auction auction = auctionRepository.findById(offerDTO.getAuctionId()).get();
         if (offerDTO.getAuctionType().equals(Type.ENGLISH)) {
             // Update "expirationTime" attribute of the Auction record
-            LocalDateTime newExpirationTime = auction.getExpirationTime().plusSeconds(auction.getAmountOfTimeToReset());
+            LocalDateTime newExpirationTime = auction.getExpirationTime().plusHours(auction.getAmountOfTimeToReset());
             auction.setExpirationTime(newExpirationTime);
             auctionRepository.save(auction);
         }

@@ -155,9 +155,9 @@ public class AuctionController {
         auction.setOwnerId(requestedAuction.getOwnerId());
         auction.setAuctionType(requestedAuction.getAuctionType());
         auction.setCurrentOfferValue(requestedAuction.getCurrentOfferValue());
-        auction.setExpirationDate(sqlDate);                                        // Note: for EnglishAuction, Date is NULL
-        auction.setExpirationTime(sqlTime);                                        // Note: for SilentAuction,  Time is NULL
-        auction.setAmountOfTimeToReset(requestedAuction.getAmountOfTimeToReset()); // Note: for SilentAuction, value if NULL
+        auction.setExpirationDate(sqlDate);                                        // Note: for EnglishAuction, Date  is NULL
+        auction.setExpirationTime(sqlTime);                                        // Note: for SilentAuction,  Time  is NULL
+        auction.setAmountOfTimeToReset(requestedAuction.getAmountOfTimeToReset()); // Note: for SilentAuction,  Value is NULL
         return auction;
     }
 }

@@ -43,7 +43,6 @@ public class ItemServiceTest {
         };
 
         when(itemRepository.findFeaturedItemsBySearchTermAndCategory(searchTerm, categories, userId)).thenReturn(List.<Object[]>of(retrievedObject));
-
         List<ItemDTO> itemDTOs = itemService.findItemsUpForFeaturedAuctionBySearchTermAndCategory(searchTerm, categories, userId);
         assertFalse(itemDTOs.isEmpty());
     }
@@ -66,7 +65,6 @@ public class ItemServiceTest {
         };
 
         when(itemRepository.findFeaturedItemsBySearchTermAndCategory(searchTerm, categories, userId)).thenReturn(List.<Object[]>of(retrievedObject));
-
         List<ItemDTO> itemDTOs = itemService.findItemsUpForFeaturedAuctionBySearchTermAndCategory(searchTerm, categories, userId);
         assertFalse(itemDTOs.isEmpty());
     }
@@ -89,7 +87,6 @@ public class ItemServiceTest {
         };
 
         when(itemRepository.findFeaturedItemsBySearchTermAndCategory(searchTerm, categories, userId)).thenReturn(List.<Object[]>of(retrievedObject));
-
         List<ItemDTO> itemDTOs = itemService.findItemsUpForFeaturedAuctionBySearchTermAndCategory(searchTerm, categories, userId);
         assertFalse(itemDTOs.isEmpty());
     }
@@ -99,17 +96,6 @@ public class ItemServiceTest {
         String searchTerm       = "Bicicletta";
         int userId              = -1;
         List<String> categories = new ArrayList<>();
-
-        User owner = new User();
-        owner.setUserId(userId);
-        Object[] retrievedObject = new Object[] {
-                3,
-                "Bicicletta",
-                "Bicicletta utilizzata di mio nipote",
-                "Collezionismo",
-                0.0f,
-                owner
-        };
 
         List<ItemDTO> items = itemService.findItemsUpForFeaturedAuctionBySearchTermAndCategory(searchTerm, categories, userId);
         assertTrue(items.isEmpty());
@@ -121,17 +107,6 @@ public class ItemServiceTest {
         int userId              = 2;
         List<String> categories = null;
 
-        User owner = new User();
-        owner.setUserId(userId);
-        Object[] retrievedObject = new Object[] {
-                3,
-                "Bicicletta",
-                "Bicicletta utilizzata di mio nipote",
-                "Collezionismo",
-                0.0f,
-                owner
-        };
-
         List<ItemDTO> items = itemService.findItemsUpForFeaturedAuctionBySearchTermAndCategory(searchTerm, categories, userId);
         assertTrue(items.isEmpty());
     }
@@ -142,17 +117,6 @@ public class ItemServiceTest {
         int userId              = 2;
         List<String> categories = new ArrayList<>();
         categories.add("Collezionismo");
-
-        User owner = new User();
-        owner.setUserId(userId);
-        Object[] retrievedObject = new Object[] {
-                3,
-                "Bicicletta",
-                "Bicicletta utilizzata di mio nipote",
-                "Collezionismo",
-                0.0f,
-                owner
-        };
 
         List<ItemDTO> items = itemService.findItemsUpForFeaturedAuctionBySearchTermAndCategory(searchTerm, categories, userId);
         assertTrue(items.isEmpty());
