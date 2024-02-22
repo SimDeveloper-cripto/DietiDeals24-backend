@@ -1,4 +1,4 @@
-package com.exam.ingsw.dietideals24.service.Interface;
+package com.exam.ingsw.dietideals24.service.serviceinterface;
 
 import java.util.List;
 import com.exam.ingsw.dietideals24.model.dto.OfferDTO;

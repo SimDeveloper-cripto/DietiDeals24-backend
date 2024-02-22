@@ -1,7 +1,9 @@
 package com.exam.ingsw.dietideals24.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.ArrayList;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -10,12 +12,12 @@ import org.springframework.stereotype.Service;
 import com.exam.ingsw.dietideals24.model.Offer;
 import com.exam.ingsw.dietideals24.model.Auction;
 import com.exam.ingsw.dietideals24.model.dto.OfferDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.exam.ingsw.dietideals24.utility.MySQLDateAndTimeParser;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import com.exam.ingsw.dietideals24.repository.IOfferRepository;
 import com.exam.ingsw.dietideals24.repository.IAuctionRepository;
-import com.exam.ingsw.dietideals24.service.Interface.IOfferService;
+import com.exam.ingsw.dietideals24.service.serviceinterface.IOfferService;
 
 @Service("OfferService")
 public class OfferService implements IOfferService {
@@ -46,12 +48,20 @@ public class OfferService implements IOfferService {
     public void createOffer(OfferDTO offerDTO) {
         Offer offer = new Offer();
 
-        Auction auction = auctionRepository.findById(offerDTO.getAuctionId()).get();
+        Auction auction = null;
+        Optional<Auction> retrievedAuction = auctionRepository.findById(offerDTO.getAuctionId());
+        if (retrievedAuction.isPresent()) auction = retrievedAuction.get();
+
         if (offerDTO.getAuctionType().equals(Type.ENGLISH)) {
+            assert auction != null;
+
             // Update "expirationTime" attribute of the Auction record
-            LocalDateTime now               = LocalDateTime.now();
+            LocalDateTime now = LocalDateTime.now();
             LocalDateTime newExpirationTime = now.plusHours(auction.getAmountOfTimeToReset());
-            newExpirationTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+
+            String newFormattedDateTime = newExpirationTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            System.out.println("[ENGLISH AUCTION] CREATED OFFER WITH EXPIRATION TIME: " + newFormattedDateTime);
+
             auction.setExpirationTime(newExpirationTime);
             auctionRepository.save(auction);
         }

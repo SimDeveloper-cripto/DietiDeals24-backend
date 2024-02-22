@@ -54,11 +54,7 @@ public class Auction {
     /* METHODS */
 
     public void updateStatusForSilentAuction() {
-        if (Type.SILENT.equals(auctionType) && expirationDate != null) {
-            if (expirationDate.before(new Date(System.currentTimeMillis()))) {
-                setActive(false); // Silent Auction has expired
-            }
-        }
+        if (Type.SILENT.equals(auctionType) && expirationDate != null && expirationDate.before(new Date(System.currentTimeMillis()))) setActive(false); // Silent Auction has expired
     }
 
     /* GETTERS AND SETTERS */

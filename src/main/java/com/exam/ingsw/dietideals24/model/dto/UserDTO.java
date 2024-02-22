@@ -4,7 +4,12 @@ import java.io.Serializable;
 
 public class UserDTO implements Serializable {
     private Integer userId;
-    private String name, surname, email, password, bio, webSiteUrl;
+    private String name;
+    private String surname;
+    private String email;
+    private String password;
+    private String bio;
+    private String webSiteUrl;
 
     public void setUserId(Integer userId) {
         this.userId = userId;

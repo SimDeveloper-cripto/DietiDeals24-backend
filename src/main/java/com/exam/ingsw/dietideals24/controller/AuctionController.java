@@ -19,7 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import com.exam.ingsw.dietideals24.service.Interface.IAuctionService;
+import com.exam.ingsw.dietideals24.service.serviceinterface.IAuctionService;
 import com.exam.ingsw.dietideals24.service.scheduler.SilentAuctionSchedulerService;
 
 import java.text.ParseException;
@@ -120,7 +120,7 @@ public class AuctionController {
 
     /* ENGLISH AUCTION RELATED METHOD */
     @GetMapping("/auction/getRemainingTime")
-    public ResponseEntity<?> getTimeRemaining(
+    public ResponseEntity<AuctionStatusDTO> getTimeRemaining(
             @RequestParam Integer auctionId,
             @RequestParam Integer userId) throws EmptyParametersException {
         if (auctionId == null || userId == null) throw new EmptyParametersException("getRemainingTime: at least one parameter is NULL!");

@@ -18,9 +18,6 @@ public class OfferDTO implements Serializable {
     private String offerTime;
     private Type auctionType;
 
-    /* CONSTRUCTOR */
-    public OfferDTO() {}
-
     /* GETTERS AND SETTERS */
     public Long getOfferId() {
         return offerId;

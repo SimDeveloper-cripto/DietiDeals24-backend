@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import com.exam.ingsw.dietideals24.exception.EmptyParametersException;
 
 import com.exam.ingsw.dietideals24.model.dto.UserDTO;
-import com.exam.ingsw.dietideals24.service.Interface.IUserService;
+import com.exam.ingsw.dietideals24.service.serviceinterface.IUserService;
 
 @RestController
 public class UserController {

@@ -9,7 +9,8 @@ import com.exam.ingsw.dietideals24.enums.Type;
 **/
 
 public class AuctionDTO implements Serializable {
-    private int ownerId, amountOfTimeToReset;
+    private int ownerId;
+    private int amountOfTimeToReset;
     private boolean active;
     private Type auctionType;
     private String expirationTime;

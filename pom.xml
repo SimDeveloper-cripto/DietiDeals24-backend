@@ -18,7 +18,7 @@
 	<properties>
 		<java.version> 21 </java.version>
 		<sonar.projectKey> INGSW-2324-BACKEND </sonar.projectKey>
-		<sonar.login> sqp_4d4f64c5cccd02b4f419ef2928aa7c922c09c361 </sonar.login>
+		<sonar.login> sqp_61d89e887d114214fbdc304b2b7ec0b16d228fee </sonar.login>
 		<sonar.host> http://localhost:9000 </sonar.host>
 	</properties>
 

@@ -81,7 +81,11 @@ public class EnglishAuctionSchedulerService {
             }
         } else {
             // If there are no offers, just notify the owner of the Auction
-            User owner = userRepository.findById(auction.getOwnerId()).get();
+            User owner = null;
+            Optional<User> retrievedOwner = userRepository.findById(auction.getOwnerId());
+            if (retrievedOwner.isPresent()) owner = retrievedOwner.get();
+
+            assert owner != null;
             String auctionerNofificationMessage = "Gentile " + owner.getName() + " " + owner.getSurname() +
                     ", la informiamo che la sua asta per l'Item " + auction.getItem().getName() + " è terminata senza offerte!";
             notificationService.addEnglishAuctionNotificationForUser(owner.getUserId(), auctionerNofificationMessage);

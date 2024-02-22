@@ -11,7 +11,7 @@ import com.exam.ingsw.dietideals24.model.Item;
 import com.exam.ingsw.dietideals24.model.dto.ItemDTO;
 import com.exam.ingsw.dietideals24.repository.IItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.exam.ingsw.dietideals24.service.Interface.IItemService;
+import com.exam.ingsw.dietideals24.service.serviceinterface.IItemService;
 
 @Service("ItemService")
 public class ItemService implements IItemService {

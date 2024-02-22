@@ -33,6 +33,9 @@ public class SilentAuctionSchedulerService {
     @Autowired
     private AuctionNotificationService notificationService;
 
+    private final String GENTILE = "Gentile";
+    private final String INFO = ", la informiamo che la sua asta per l'Item ";
+
     @PostConstruct
     public void checkForExpiredSilentAuctionsOnStartUp() {
         checkForExpiredSilentAuctions();
@@ -48,7 +51,11 @@ public class SilentAuctionSchedulerService {
         List<Auction> expiredSilentAuctions = auctionRepository.findByAuctionTypeAndActiveIsTrueAndExpirationDateBefore(Type.SILENT, new Date(System.currentTimeMillis()));
 
         for (Auction auction : expiredSilentAuctions) {
-            User owner        = userRepository.findById(auction.getOwnerId()).get();
+            User owner = null;
+            Optional<User> retrievedOwner = userRepository.findById(auction.getOwnerId());
+            if (retrievedOwner.isPresent()) owner = retrievedOwner.get();
+
+            assert owner != null;
             Integer ownerId   = owner.getUserId();
             Integer auctionId = auction.getAuctionId();
 
@@ -75,26 +82,35 @@ public class SilentAuctionSchedulerService {
 
                 // Notifications for each User
                 for (Offer o : offers) {
-                    User user = userRepository.findById(o.getUser().getUserId()).get();
-                    String message = "Gentile " + user.getName() + " " + user.getSurname() +
-                            ", la informiamo che la sua asta per l'Item " + auction.getItem().getName() + " è terminata!";
+                    User user = null;
+                    Optional<User> retrievedUser = userRepository.findById(o.getUser().getUserId());
+                    if (retrievedUser.isPresent()) user = retrievedUser.get();
+
+                    assert user != null;
+                    String message = GENTILE + " " + user.getName() + " " + user.getSurname() + INFO + auction.getItem().getName() + " è terminata!";
                     notificationService.addSilentAuctionNotificationForUser(user.getUserId(), message);
                 }
 
-                String warningMessage = "Gentile " + owner.getName() + " " + owner.getSurname() +
-                        ", la informiamo che deve scegliere un vincitore per l'Item " + auction.getItem().getName();
+                String warningMessage = GENTILE + " " + owner.getName() + " " + owner.getSurname() + INFO + auction.getItem().getName();
                 notificationService.addSilentAuctionNotificationForUser(ownerId, warningMessage);
             } else {
-                String auctionerNofificationMessage = "Gentile " + owner.getName() + " " + owner.getSurname() +
-                        ", la informiamo che la sua asta per l'Item " + auction.getItem().getName() + " è terminata senza offerte!";
+                String auctionerNofificationMessage = GENTILE + " " + owner.getName() + " " + owner.getSurname() + INFO + auction.getItem().getName() + " è terminata senza offerte!";
                 notificationService.addSilentAuctionNotificationForUser(ownerId, auctionerNofificationMessage);
             }
         }
     }
 
     public void notifyExpiredSilentAuctionForUser(Integer auctionId, Integer userId, Float winningBid) {
-        User winner     = userRepository.findById(userId).get();
-        Auction auction = auctionRepository.findById(auctionId).get();
+        User winner = null;
+        Optional<User> retrievedWinner = userRepository.findById(userId);
+        if (retrievedWinner.isPresent()) winner = retrievedWinner.get();
+
+        Auction auction = null;
+        Optional<Auction> retrievedAuction = auctionRepository.findById(auctionId);
+        if (retrievedAuction.isPresent()) auction = retrievedAuction.get();
+
+        assert winner != null;
+        assert auction != null;
 
         // Save:
         // 1. Winner Information
@@ -106,9 +122,12 @@ public class SilentAuctionSchedulerService {
         String winnerNotificationMessage = "Congratulazioni " + winner.getName() + "! Hai vinto l'asta per " + auction.getItem().getName() + ".";
         notificationService.addSilentAuctionNotificationForUser(winner.getUserId(), winnerNotificationMessage);
 
-        User owner = userRepository.findById(auction.getOwnerId()).get();
-        String auctionerNofificationMessage = "Gentile " + owner.getName() + " " + owner.getSurname() +
-                    ", la informiamo che la sua asta per l'Item " + auction.getItem().getName() + " è terminata con successo!";
+        User owner = null;
+        Optional<User> retrievedOwner = userRepository.findById(auction.getOwnerId());
+        if (retrievedOwner.isPresent()) owner = retrievedOwner.get();
+
+        assert owner != null;
+        String auctionerNofificationMessage = GENTILE + " " + owner.getName() + " " + owner.getSurname() + INFO + auction.getItem().getName() + " è terminata con successo!";
         notificationService.addSilentAuctionNotificationForUser(owner.getUserId(), auctionerNofificationMessage);
 
         notificationService.clearOfferMap(auction.getItem().getItemId());

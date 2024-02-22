@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import com.exam.ingsw.dietideals24.model.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.exam.ingsw.dietideals24.repository.IUserRepository;
-import com.exam.ingsw.dietideals24.service.Interface.IUserService;
+import com.exam.ingsw.dietideals24.service.serviceinterface.IUserService;
 import com.exam.ingsw.dietideals24.exception.UserNotFoundException;
 
 @Service("UserService")
@@ -18,9 +18,12 @@ public class UserService implements IUserService {
     public UserDTO registerUser(UserDTO userDTO) {
         userRepository.save(UserService.createUser(userDTO));
 
-        // Retrieval of the user's ID (DTO object does not have it, at least assigned)
-        User user = userRepository.findByEmailAndPassword(userDTO.getEmail(), userDTO.getPassword()).get();
-        userDTO.setUserId(user.getUserId());
+        // Retrieval of the just registered User's userId
+        Optional<User> retrievedUser = userRepository.findByEmailAndPassword(userDTO.getEmail(), userDTO.getPassword());
+        if (retrievedUser.isPresent()) {
+            User user = retrievedUser.get();
+            userDTO.setUserId(user.getUserId());
+        }
 
         return userDTO;
     }
@@ -40,8 +43,11 @@ public class UserService implements IUserService {
     public UserDTO retrieveUser(Integer userId, String email) {
         Optional<User> retrievedUser = userRepository.findByIdAndEmail(userId, email);
 
-        /* Useless to check if retrievedUser is present. At this point the user has already loggedIn. We know it exists. */
-        User user = retrievedUser.get();
+        // At this point the user has already loggedIn, we know it exists. For good practice we do it anyway.
+        User user = null;
+        if (retrievedUser.isPresent()) user = retrievedUser.get();
+
+        assert user != null;
 
         UserDTO userDTO = new UserDTO();
         userDTO.setUserId(user.getUserId());
