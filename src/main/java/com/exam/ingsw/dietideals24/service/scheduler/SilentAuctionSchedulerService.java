@@ -33,8 +33,8 @@ public class SilentAuctionSchedulerService {
     @Autowired
     private AuctionNotificationService notificationService;
 
-    private static final String gentile = "Gentile";
-    private static final String info = ", la informiamo che la sua asta per l'Item ";
+    private static final String GENTILE = "Gentile";
+    private static final String INFO = ", la informiamo che la sua asta per l'Item ";
 
     @PostConstruct
     public void checkForExpiredSilentAuctionsOnStartUp() {
@@ -104,7 +104,7 @@ public class SilentAuctionSchedulerService {
     }
 
     private void sendNotificationToUser(Auction auction, User user, boolean isOwner) {
-        String message = (isOwner ? "" : gentile) + user.getName() + " " + user.getSurname() + info + auction.getItem().getName() + (isOwner ? " è terminata senza offerte!" : " è terminata!");
+        String message = (isOwner ? "" : GENTILE) + user.getName() + " " + user.getSurname() + INFO + auction.getItem().getName() + (isOwner ? " è terminata senza offerte!" : " è terminata!");
         notificationService.addSilentAuctionNotificationForUser(user.getUserId(), message);
     }
 
@@ -139,7 +139,7 @@ public class SilentAuctionSchedulerService {
         if (retrievedOwner.isPresent()) owner = retrievedOwner.get();
 
         assert owner != null;
-        String auctionerNofificationMessage = gentile + " " + owner.getName() + " " + owner.getSurname() + info + auction.getItem().getName() + " è terminata con successo!";
+        String auctionerNofificationMessage = GENTILE + " " + owner.getName() + " " + owner.getSurname() + INFO + auction.getItem().getName() + " è terminata con successo!";
         notificationService.addSilentAuctionNotificationForUser(owner.getUserId(), auctionerNofificationMessage);
 
         notificationService.clearOfferMap(auction.getItem().getItemId());
