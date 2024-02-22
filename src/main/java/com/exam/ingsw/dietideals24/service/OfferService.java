@@ -60,8 +60,6 @@ public class OfferService implements IOfferService {
             LocalDateTime newExpirationTime = now.plusHours(auction.getAmountOfTimeToReset());
 
             String newFormattedDateTime = newExpirationTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-            System.out.println("[ENGLISH AUCTION] CREATED OFFER WITH EXPIRATION TIME: " + newFormattedDateTime);
-
             auction.setExpirationTime(newExpirationTime);
             auctionRepository.save(auction);
         }
