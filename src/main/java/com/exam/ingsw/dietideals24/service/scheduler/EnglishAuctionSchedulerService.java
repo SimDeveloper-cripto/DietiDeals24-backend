@@ -39,7 +39,7 @@ public class EnglishAuctionSchedulerService {
     @EventListener(ApplicationReadyEvent.class)
     public void checkForExpiredEnglishAuctions() {
         LocalDateTime now = LocalDateTime.now();
-        List<Auction> expiredEnglishAuctions = auctionRepository.findByAuctionTypeAndActiveIsTrueAndExpirationTimeBefore(Type.ENGLISH, now);
+        List<Auction> expiredEnglishAuctions = auctionRepository.findByAuctionTypeAndActiveIsTrueAndExpirationTimeAfter(Type.ENGLISH, now);
 
         for (Auction auction : expiredEnglishAuctions) {
             auction.setActive(false);

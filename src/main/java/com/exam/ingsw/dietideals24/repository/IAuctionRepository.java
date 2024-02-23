@@ -28,7 +28,7 @@ public interface IAuctionRepository extends CrudRepository<Auction, Integer> {
 
     List<Auction> findByAuctionTypeAndActiveIsTrueAndExpirationDateBefore(Type auctionType, Date expirationDate);
 
-    List<Auction> findByAuctionTypeAndActiveIsTrueAndExpirationTimeBefore(Type auctionType, LocalDateTime expirationTime);
+    List<Auction> findByAuctionTypeAndActiveIsTrueAndExpirationTimeAfter(Type auctionType, LocalDateTime expirationTime);
 
     @Modifying
     @Transactional
