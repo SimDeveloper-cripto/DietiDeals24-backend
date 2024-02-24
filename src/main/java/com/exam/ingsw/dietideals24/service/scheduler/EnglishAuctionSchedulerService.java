@@ -33,9 +33,11 @@ public class EnglishAuctionSchedulerService {
 
     /* [DESCRIPTION]
         - Execute once at startup
-        - Execute once a minute
+        - Execute once a second
+
+        [OLD] @Scheduled(cron = "0 * * * * ?") // Execute once a minute
     **/
-    @Scheduled(cron = "0 * * * * ?")
+    @Scheduled(cron = "* * * * * *")
     @EventListener(ApplicationReadyEvent.class)
     public void checkForExpiredEnglishAuctions() {
         LocalDateTime now = LocalDateTime.now();
