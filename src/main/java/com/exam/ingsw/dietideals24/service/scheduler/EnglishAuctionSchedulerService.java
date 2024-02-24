@@ -12,6 +12,7 @@ import com.exam.ingsw.dietideals24.repository.IUserRepository;
 import com.exam.ingsw.dietideals24.repository.IOfferRepository;
 import com.exam.ingsw.dietideals24.repository.IAuctionRepository;
 
+import org.springframework.stereotype.Service;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
     - It is used to check the expired english auctions once when the application is started and every minute, updating them if necessary.
 **/
 
+@Service
 public class EnglishAuctionSchedulerService {
     @Autowired
     private IUserRepository userRepository;
