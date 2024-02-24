@@ -42,12 +42,15 @@ public class AuctionService implements IAuctionService {
             throw new AuctionNotFoundException("Could not find Auction with ID: " + auctionId);
         }
 
-        Auction auction = retrievedAuction.get();
-        if (!auction.isActive()) { // Here we check if the scheduler has recognized and updated the Auction record
+        Auction auction       = retrievedAuction.get();
+        LocalDateTime now     = LocalDateTime.now();
+        LocalDateTime expTime = auction.getExpirationTime();
+
+        if (now.isAfter(expTime)) {
+            auction.setActive(false);
+            auctionRepository.save(auction);
             throw new AuctionExpiredException("Auction with ID: " + auctionId + " has ended!");
         } else {
-            LocalDateTime now     = LocalDateTime.now();
-            LocalDateTime expTime = auction.getExpirationTime();
             Duration duration     = Duration.between(now, expTime);
             long secondsRemaining = duration.toSeconds();
             return new AuctionStatusDTO(true,"Auction is still active!", secondsRemaining);
