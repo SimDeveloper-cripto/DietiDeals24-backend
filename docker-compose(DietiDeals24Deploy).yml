@@ -7,6 +7,7 @@ services:
       - "8080:8080"
     depends_on:
       - mysql-container
+    restart: always
 
   mysql-container:
     image: mysql:latest
@@ -18,6 +19,7 @@ services:
       - "3307:3306"
     volumes:
       - './dietideals24-db-dump/dietideals24.sql:/docker-entrypoint-initdb.d/init.sql'
+    restart: on-failure
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -31,3 +33,4 @@ services:
       - "8081:80"
     depends_on:
       - mysql-container
+    restart: on-failure
