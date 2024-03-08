@@ -42,3 +42,9 @@ $ spring.datasource.url=jdbc:mysql://localhost:3307/ingsw_exam
 # Comment out this one 
 $ spring.datasource.url=jdbc:mysql://mysql-container:3306/ingsw_exam
 ```
+
+After this you can run the Docker Container:
+
+```bash
+$ docker compose -f 'docker-compose(DietiDeals24).yml' up -d
+```
