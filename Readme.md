@@ -1,13 +1,13 @@
-# Welcome to DietiDeals24
+# Welcome to DietiDeals24 (MAVEN Project)
 
 Developed both on Linux (Ubuntu22 and Ubuntu23) and Windows (10 and 11).
-Database script is already provided for you. <br />
+Database script is already provided for you: folder __dietideals24-db-dump__ <br />
 Software required: <br />
 - Java 21
 - Git
 - Docker
 
-Open the project inside Intellij IDE, but before running DietiDeals24BackendApplication.java you need to follow some steps.
+Open the project inside Intellij IDE, but before running __DietiDeals24BackendApplication.java__ you need to follow some steps.
 
 ## Cloud
 
